@@ -1,0 +1,28 @@
+{
+  "name": "妈妈告诉我围脖真的是个好图床呀",
+  "version": "0.0.1",
+  "description": "这样才可以收买人心呀~",
+  "icons": {
+    "128": "style/images/icon_128.png"
+  },
+  "homepage_url": "http://eux.baidu.com/",
+  "background": {
+    "scripts": [
+      "js/background.js"
+    ]
+  },
+  "permissions": [
+    "webRequest",
+    "webRequestBlocking",
+    "tabs",
+    "\u003Call_urls>"
+  ],
+  "browser_action": {
+    "default_icon": {
+      "19": "style/images/icon_19.png",
+      "38": "style/images/icon_38.png"
+    },
+    "default_title": "点击打开图片上传窗口"
+  },
+  "manifest_version": 2
+}

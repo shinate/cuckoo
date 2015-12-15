@@ -1,0 +1,78 @@
+@import "font-awesome";
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+input, textarea, button {
+  outline: none;
+}
+
+body {
+  background-color: #333333;
+}
+
+.plat {
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: 32px;
+  background-color: fadeout(#555555, 50%);
+  border: 5px dashed #999999;
+
+  .plat-box {
+    opacity: 0;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border: 0;
+  }
+}
+
+.list {
+  position: relative;
+  z-index: 0;
+  padding: 16px;
+
+  .preview {
+    float: left;
+    margin: 16px;
+    height: 128px;
+    width: 128px;
+    border: 8px solid;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    position: relative;
+
+    > .picture {
+      height: 100%;
+      width: 100%;
+      background-repeat: no-repeat;
+      background-position: 50% 50%;
+      background-size: cover;
+    }
+
+    > button {
+      font-size: 20px;
+      cursor: pointer;
+      color: white;
+      position: absolute;
+      height: 32px;
+      width: 32px;
+      right: 0;
+      bottom: 0;
+      border: 0 none;
+      margin: 0 -8px -8px 0;
+      background-color: #00C813;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+    }
+  }
+}
