@@ -7,11 +7,44 @@
     <script src="dev/less.min.js"></script>
 </head>
 <body>
-<div id="plat" class="plat">
-    <input type="file" multiple="true" id="plat-box" class="plat-box">
-</div>
-<div id="list" class="list"></div>
+<ul id="bar" class="bar">
+    <li>
+        <button action-type="copyAllToClipboard" class="fa fa-copy"></button>
+    </li>
+    <li>
+        <button node-type="uploadBtn" action-type="uploadBtn" class="fa fa-cloud-upload"></button>
+    </li>
+    <li>
+        <button action-type="urlsText" class="fa fa-clipboard"></button>
+    </li>
+    <li>
+        <button action-type="history" class="fa fa-history"></button>
+    </li>
+</ul>
+<ul id="platform">
+    <li node-type="upload">
+        <div node-type="uploadDrop">
+            <div class="drop-pictures-here">
+                <i class="fa fa-picture-o"></i>
+                <i class="fa fa-folder-open-o"></i>
+                <b>Drop pictures here OR click to open a file picker</b>
+            </div>
+            <input node-type="uploadBox" type="file" multiple="true">
+        </div>
+    </li>
+    <li node-type="urlsText">
+        <textarea node-type="urlsTextBox"></textarea>
+    </li>
+</ul>
+<ul id="list" class="list clearfix"></ul>
+
+<script src="js/zepto.js"></script>
+<script src="js/parseDOM.js"></script>
+<script src="js/channel.js"></script>
 <script src="js/queue.js"></script>
+<script src="js/view.js"></script>
 <script src="js/uploader.js"></script>
+<script src="js/app/weibo.js"></script>
+<script src="js/bondage.js"></script>
 </body>
 </html>
