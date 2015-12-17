@@ -20,6 +20,8 @@
 
         nodes.body.addClass('right');
         nodes.upload.addClass('show');
+        it.custEvts.copyLock();
+        it.custEvts.urlsTextLock();
     };
 
     it.bind = function () {
@@ -56,10 +58,12 @@
 
     it.evts = {
         bar: {
-            copyAllToClipboard: function (e) {
+            copyBtn: function (e) {
                 e.preventDefault();
-                if (cache.urls && cache.urls.length) {
-                    channel.fire(it.name, 'copyAllToClipboard', cache.urls.join('\n'));
+                if (!lock.copyBtn) {
+                    if (cache.urls && cache.urls.length) {
+                        channel.fire(it.name, 'copyAllToClipboard', cache.urls.join('\n'));
+                    }
                 }
                 return false;
             },
@@ -70,9 +74,18 @@
                 }
                 return false;
             },
-            urlsText: function (e) {
+            urlsTextBtn: function (e) {
                 e.preventDefault();
-                it.showPlat('urlsText');
+                if (!lock.urlsTextBtn) {
+                    if (cache.urls && cache.urls.length) {
+                        it.showPlat('urlsText');
+                    }
+                }
+                return false;
+            },
+            historyBtn: function (e) {
+                e.preventDefault();
+                it.renderHistory();
                 return false;
             }
         },
@@ -121,6 +134,22 @@
         uploadUnlock: function () {
             lock.uploadBtn = false;
             nodes.uploadBtn.removeClass('disable');
+        },
+        copyLock: function () {
+            lock.copyBtn = true;
+            nodes.copyBtn.addClass('disable');
+        },
+        copyUnlock: function () {
+            lock.copyBtn = false;
+            nodes.copyBtn.removeClass('disable');
+        },
+        urlsTextLock: function () {
+            lock.urlsTextBtn = true;
+            nodes.urlsTextBtn.addClass('disable');
+        },
+        urlsTextUnlock: function () {
+            lock.urlsTextBtn = false;
+            nodes.urlsTextBtn.removeClass('disable');
         }
     };
 
@@ -136,6 +165,20 @@
             }
         });
         nodes.platform.find('[node-type="' + name + '"]').addClass('show');
+    };
+
+    it.renderHistory = function () {
+        var history = historyManager.load();
+        if (history.length) {
+            nodes.historyBox.html(history.reverse().map(function (item) {
+                return '<li>' +
+                    '<div style="background-image:url(' + item.src + ')"></div>' +
+                    '</li>';
+            }).join('\n'));
+            it.showPlat('history');
+        } else {
+            channel.fire('tips', 'show', '没有上传记录');
+        }
     };
 
     it.init();

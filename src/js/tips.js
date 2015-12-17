@@ -1,4 +1,4 @@
-(function ($) {
+(function ($, global) {
 
     var Z = 10000;
     var defaultTime = 1500;
@@ -40,5 +40,6 @@
     }
 
     channel.register(name, 'show', tip);
+    //global['tips'] = tip;
 
-})(Zepto);
+})(Zepto, window);

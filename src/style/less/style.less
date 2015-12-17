@@ -15,12 +15,12 @@ body {
     top: 0;
     right: 0;
     height: 100%;
-    width: 48px;
+    width: @const-bar-width;
   }
 
   li {
-    width: 48px;
-    height: 48px;
+    width: @const-bar-width;
+    height: @const-bar-width;
     border-bottom: 1px solid #000000;
 
     button {
@@ -30,7 +30,7 @@ body {
       width: 100%;
       height: 100%;
       text-align: center;
-      line-height: 48px;
+      line-height: @const-bar-width;
       font-size: 24px;
       color: @const-color-link-normal;
       cursor: pointer;
@@ -60,15 +60,8 @@ body {
     top: 0;
     left: 100%;
 
-    li {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: inherit;
-      width: inherit;
-      padding: 32px 80px 32px 32px;
-      box-sizing: border-box;
-      transition: transform 500ms;
+    > li {
+      padding-right: 32px + @const-bar-width;
 
       &.show {
         transform: translateX(-100%);
@@ -77,6 +70,17 @@ body {
         transform: translateX(0);
       }
     }
+  }
+
+  > li {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    padding: 32px;
+    box-sizing: border-box;
+    transition: transform 500ms;
   }
 
   > [node-type="upload"] {
@@ -111,12 +115,38 @@ body {
       box-sizing: border-box;
       padding: 16px;
       font-size: 14px;
-      border: 5px solid #999999;
+      border: 5px solid fadeout(@const-color-font-normal, 2%);
       height: 100%;
       width: 100%;
       display: block;
-      background-color: #d0d0d0;
+      background-color: fadeout(#d0d0d0, 5%);
       resize: none;
+    }
+  }
+
+  > [node-type="history"] {
+
+    > ul {
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: fadeout(#000000, 5%);
+
+      > li {
+        background-color: fadeout(#999999, 5%);
+
+        div {
+          height: 96px;
+          width: 128px;
+          background-repeat: no-repeat;
+          background-position: 50% 50%;
+          background-size: cover;
+        }
+
+        &:not(:last-child) {
+          margin-bottom: 2px;
+        }
+      }
     }
   }
 }
@@ -127,7 +157,7 @@ body {
   padding: 16px;
 
   body.right & {
-    padding-right: 64px;
+    padding-right: 16px + @const-bar-width;
   }
 
   .preview {
@@ -151,6 +181,7 @@ body {
     }
 
     > button {
+      display: none;
       font-size: 16px;
       cursor: pointer;
       color: white;
@@ -176,7 +207,8 @@ body {
     &.uploaded {
       background: @const-color-preview-uploaded;
 
-      > button {
+      > button[action-type="copy"] {
+        display: block;
         background: @const-color-preview-uploaded;
       }
     }

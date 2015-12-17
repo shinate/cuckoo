@@ -47,12 +47,13 @@ gulp.task('js', ['js-core', 'js-main', 'js-apps', 'js-background']);
 
 gulp.task('js-core', function () {
     return gulp.src([
+        CONF.src + '/js/queue.js',
         CONF.src + '/js/channel.js',
+        CONF.src + '/js/history.js',
         CONF.src + '/js/zepto.js',
         CONF.src + '/js/parseDOM.js',
         CONF.src + '/js/tips.js',
-        CONF.src + '/js/clipboard.js',
-        CONF.src + '/js/queue.js'
+        CONF.src + '/js/clipboard.js'
     ])
         .pipe(concat('core.js'))
         .pipe(uglify())

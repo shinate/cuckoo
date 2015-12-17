@@ -23,3 +23,26 @@ a {
   content: '';
   display: table;
 }
+
+::-webkit-scrollbar /*整体部分*/
+{
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track /*滑动轨道*/
+{
+  -webkit-box-shadow: none;
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb /*滑块*/
+{
+  -webkit-box-shadow: none;
+  background: fadeout(@const-color-font-normal, 30%);
+}
+
+::-webkit-scrollbar-thumb:hover /*滑块效果*/
+{
+  background: fadeout(@const-color-font-normal, 10%);
+}

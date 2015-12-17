@@ -10,6 +10,8 @@
     var previewList = [];
     var taskManager = {};
 
+    var ALLOWED_TYPE = ['image/png', 'image/jpeg', 'image/gif', 'image/bmp'];
+
     it.name = 'uploader';
 
     it.init = function () {
@@ -28,6 +30,20 @@
                 channel.register(it.name, type, it.custEvts[type]);
             }
         }
+
+        for (var type in it.evts) {
+            if (it.evts.hasOwnProperty(type)) {
+                nodes.list.on('click', '[action-type="' + type + '"]', it.evts[type]);
+            }
+        }
+    };
+
+    it.evts = {
+        'copy': function (e) {
+            e.preventDefault();
+            it.copyToClipboard($(this).parents('.preview').data('url'));
+            return false;
+        }
     };
 
     it.custEvts = {
@@ -39,7 +55,7 @@
     it.getImageList = function (files) {
         var imageList = [];
         for (var i = 0; i < files.length; i++) {
-            if (files[i].type.search(/^image/) > -1) {
+            if (ALLOWED_TYPE.indexOf(files[i].type) > -1) {
                 imageList.push(files[i]);
             }
         }
@@ -62,16 +78,28 @@
 
     it.uploadQueueCompleteScan = function () {
         var s = taskManager.status;
-        var reject = s.filter(function (i) {
-            return i === 'rejected' ? true : false;
+        var reject = s.filter(function (v) {
+            return v === 'rejected' ? true : false;
         });
-        var reslove = s.filter(function (i) {
-            return i === 'resloved' ? true : false;
+        var newPics = [];
+        var reslove = s.filter(function (v, i) {
+            if (v === 'resloved') {
+                newPics.push(previewList[i].data('url'));
+                return true;
+            } else {
+                return false;
+            }
         });
+
         // Accomplished!!!
         if (s.length === reject.length + reslove.length) {
             it.resetTaskList();
             channel.fire(it.name, 'uploadComplete', [it.getAllUrls()]);
+            channel.fire(it.name, 'saveToHistory', [
+                newPics.map(function (item) {
+                    return {src: item};
+                })
+            ]);
         }
     };
 
@@ -115,12 +143,13 @@
     };
 
     it.createPreview = function (dp) {
-        var wrap = $('<li></li>').addClass('preview');
-        var img = $('<div></div>').addClass('picture');
-        img.css('background-image', 'url(' + dp + ')');
-        wrap.append(img);
-        nodes.list.append(wrap);
-        previewList.push(wrap);
+        var preview = $('' +
+            '<li class="preview">' +
+            '<div class="picture" style="background-image:url(' + dp + ')"></div>' +
+            '<button action-type="copy" class="fa fa-copy"></button>' +
+            '</li>');
+        nodes.list.append(preview);
+        previewList.push(preview);
     };
 
     it.uploading = function (i) {
@@ -145,16 +174,6 @@
             p.onload = function () {
                 previewEL.addClass('uploaded');
                 previewEL.find('.picture').css('background-image', 'url(' + url + ')');
-                var copyBtn = $('<button></button>').addClass('fa fa-copy');
-                copyBtn.on('click', function () {
-                    var el = $(this);
-                    it.copyToClipboard(el.parents('.preview').data('url'));
-                    //el.removeClass('fa-copy').addClass('fa-check');
-                    //global.setTimeout(function () {
-                    //    el.removeClass('fa-check').addClass('fa-copy');
-                    //}, 1500);
-                });
-                previewEL.append(copyBtn);
                 taskManager.status[i] = 'resloved';
                 it.uploadQueueCompleteScan();
             };

@@ -14,13 +14,9 @@
 
         try {
             var successful = document.execCommand('copy');
-            if (successful) {
-                channel.fire(name, 'copySuccessful', '成功复制到剪切板');
-            } else {
-                channel.fire(name, 'copyUnsuccessful', '复制失败, 请手动进行');
-            }
+            channel.fire('tips', 'show', successful ? '成功复制到剪切板' : '复制失败, 请手动进行');
         } catch (err) {
-            channel.fire(name, 'copyUnsuccessful', '无法复制, 请手动进行');
+            channel.fire('tips', 'show', '无法复制, 请手动进行');
         }
 
         el.remove();

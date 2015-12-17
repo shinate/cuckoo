@@ -11,16 +11,16 @@
 <body>
 <ul id="bar" class="bar">
     <li>
-        <button action-type="copyAllToClipboard" class="fa fa-copy"></button>
+        <button title="上传" node-type="uploadBtn" action-type="uploadBtn" class="fa fa-cloud-upload"></button>
     </li>
     <li>
-        <button node-type="uploadBtn" action-type="uploadBtn" class="fa fa-cloud-upload"></button>
+        <button title="复制全部当前上传" node-type="copyBtn" action-type="copyBtn" class="fa fa-copy"></button>
     </li>
     <li>
-        <button action-type="urlsText" class="fa fa-clipboard"></button>
+        <button title="链接编辑面板" node-type="urlsTextBtn" action-type="urlsTextBtn" class="fa fa-clipboard"></button>
     </li>
     <li>
-        <button action-type="history" class="fa fa-history"></button>
+        <button title="历史上传" node-type="historyBtn" action-type="historyBtn" class="fa fa-history"></button>
     </li>
 </ul>
 <ul id="platform">
@@ -37,11 +37,15 @@
     <li node-type="urlsText">
         <textarea node-type="urlsTextBox"></textarea>
     </li>
+    <li node-type="history">
+        <ul node-type="historyBox"></ul>
+    </li>
 </ul>
 <ul id="list" class="list clearfix"></ul>
 <!-- build:js -->
 <script src="js/queue.js"></script>
 <script src="js/channel.js"></script>
+<script src="js/history.js"></script>
 <script src="js/zepto.js"></script>
 <script src="js/parseDOM.js"></script>
 <script src="js/tips.js"></script>
