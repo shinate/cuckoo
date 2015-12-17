@@ -27,4 +27,4 @@
     };
 
     channel.register(name, 'copy', copyTextToClipboard);
-})(Zepto)
+})(Zepto);

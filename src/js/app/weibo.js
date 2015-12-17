@@ -1,6 +1,7 @@
 (function () {
 
     var name = 'app_weibo';
+    var UP_URL = "http://picupload.service.weibo.com/interface/pic_upload.php?&mime=image%2Fjpeg&data=base64&url=0&markpos=1&logo=&nick=0&marks=1&app=miniblog";
 
     function pid2url(pid, type) {
         function crc32(str) {
@@ -48,7 +49,7 @@
                 }
             }
         };
-        xhr.open("POST", "http://picupload.service.weibo.com/interface/pic_upload.php?&mime=image%2Fjpeg&data=base64&url=0&markpos=1&logo=&nick=0&marks=1&app=miniblog");
+        xhr.open("POST", UP_URL);
         xhr.send(data);
     }
 
