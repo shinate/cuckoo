@@ -40,7 +40,12 @@
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 var rs = JSON.parse(xhr.responseText.substring(xhr.responseText.indexOf('{"')));
-                onComplete(pid2url(rs.data.pics.pic_1.pid, 'large'))
+                if (rs.code === 'A00006') {
+                    onComplete(pid2url(rs.data.pics.pic_1.pid, 'large'));
+                } else {
+                    onComplete(null);
+                    channel.fire(name, 'error', '上传失败, 请先<a href="http://weibo.com/" target="_blank">登录</a>围脖', 3000);
+                }
             }
         };
         xhr.open("POST", "http://picupload.service.weibo.com/interface/pic_upload.php?&mime=image%2Fjpeg&data=base64&url=0&markpos=1&logo=&nick=0&marks=1&app=miniblog");

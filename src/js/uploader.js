@@ -33,10 +33,6 @@
     it.custEvts = {
         upload: function (files) {
             it.startUpload(files);
-        },
-        copyAllToClipboard: function () {
-            var urls = it.getAllUrls();
-            it.copyAllToClipboard(urls.join('\n'));
         }
     };
 
@@ -75,7 +71,7 @@
         // Accomplished!!!
         if (s.length === reject.length + reslove.length) {
             it.resetTaskList();
-            channel.fire(it.name, 'uploadComplete');
+            channel.fire(it.name, 'uploadComplete', [it.getAllUrls()]);
         }
     };
 
@@ -103,7 +99,11 @@
             it.uploading(i);
             channel.fire(it.name, 'uploadTo', [
                 imageData, function (url) {
-                    it.uploaded(i, url);
+                    if (url != null) {
+                        it.uploaded(i, url);
+                    } else {
+                        it.uploaderr(i);
+                    }
                     next();
                 }
             ]);
@@ -129,6 +129,7 @@
 
     it.uploaderr = function (i) {
         if (taskManager.status && taskManager.status[i] !== 'resloved') {
+            global.clearTimeout(taskManager.status[i]);
             previewList[i].addClass('uploaderr');
             taskManager.status[i] = 'rejected';
             it.uploadQueueCompleteScan();
@@ -138,54 +139,36 @@
     it.uploaded = function (i, url) {
         if (url && taskManager.status && taskManager.status[i] !== 'rejected') {
             global.clearTimeout(taskManager.status[i]);
-            taskManager.status[i] = 'resloved';
-
             var previewEL = previewList[i];
+            previewEL.data('url', url);
             var p = new Image;
             p.onload = function () {
-                previewEL.data('url', url).addClass('uploaded');
+                previewEL.addClass('uploaded');
                 previewEL.find('.picture').css('background-image', 'url(' + url + ')');
                 var copyBtn = $('<button></button>').addClass('fa fa-copy');
                 copyBtn.on('click', function () {
                     var el = $(this);
-                    it.copyTextToClipboard(el.parents('.preview').data('url'));
-                    el.removeClass('fa-copy').addClass('fa-check');
-                    global.setTimeout(function () {
-                        el.removeClass('fa-check').addClass('fa-copy');
-                    }, 1500);
+                    it.copyToClipboard(el.parents('.preview').data('url'));
+                    //el.removeClass('fa-copy').addClass('fa-check');
+                    //global.setTimeout(function () {
+                    //    el.removeClass('fa-check').addClass('fa-copy');
+                    //}, 1500);
                 });
                 previewEL.append(copyBtn);
+                taskManager.status[i] = 'resloved';
+                it.uploadQueueCompleteScan();
             };
             p.src = url;
-            it.uploadQueueCompleteScan();
-
         }
     };
 
-    it.copyTextToClipboard = function (text) {
-        var el = $('<textarea></textarea>').css({
-            //position: 'absolute',
-            //left: '-10000px'
-        }).val(text);
-
-        nodes.body.append(el);
-
-        el.get(0).select();
-
-        try {
-            var successful = document.execCommand('copy');
-            var msg = successful ? 'successful' : 'unsuccessful';
-            console.log('Copying text command was ' + msg);
-        } catch (err) {
-            console.log('Oops, unable to copy');
-        }
-
-        el.remove();
+    it.copyToClipboard = function (text) {
+        channel.fire(it.name, 'copyToClipboard', text);
     };
 
     it.getAllUrls = function () {
         var urls = [];
-        nodes.list.find('.preview button').each(function () {
+        nodes.list.find('.preview').each(function () {
             urls.push($(this).data('url'));
         });
         return urls;

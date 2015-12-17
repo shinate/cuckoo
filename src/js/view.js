@@ -3,6 +3,7 @@
     var it = {};
     var nodes = {};
     var lock = {};
+    var cache = {};
 
     it.name = 'view';
 
@@ -57,7 +58,9 @@
         bar: {
             copyAllToClipboard: function (e) {
                 e.preventDefault();
-                channel.fire(it.name, 'copyAllToClipboard', it.custEvts.updateUrlsText);
+                if (cache.urls && cache.urls.length) {
+                    channel.fire(it.name, 'copyAllToClipboard', cache.urls.join('\n'));
+                }
                 return false;
             },
             uploadBtn: function (e) {
@@ -107,8 +110,9 @@
                 els.removeClass('hide').removeClass('show');
             }, 500);
         },
-        updateUrlsText: function (urlsText) {
-            nodes.urlsTextBox.val(urlsText);
+        updateUrlsText: function (urls) {
+            cache.urls = urls;
+            nodes.urlsTextBox.val(urls.join('\n'));
         },
         uploadLock: function () {
             lock.uploadBtn = true;
@@ -117,9 +121,6 @@
         uploadUnlock: function () {
             lock.uploadBtn = false;
             nodes.uploadBtn.removeClass('disable');
-        },
-        updateUrlsText: function (urls) {
-            nodes.urlsTextBox.val(urls.join('\n'));
         }
     };
 
