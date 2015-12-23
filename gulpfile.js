@@ -7,6 +7,7 @@ var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 var htmlReplace = require('gulp-html-replace');
 var less = require('gulp-less');
+var dc = require('gulp-drop-comments')
 
 var CONF = {
     src: 'src',
@@ -25,6 +26,7 @@ gulp.task('style-css', function () {
         CONF.src + '/style/less/style.less'
     ])
         .pipe(less())
+        .pipe(dc())
         .pipe(minifycss())
         .pipe(gulp.dest(CONF.build + '/style/css'));
 });
@@ -43,17 +45,11 @@ gulp.task('style-font', function () {
         .pipe(gulp.dest(CONF.build + '/style/fonts'));
 });
 
-gulp.task('js', ['js-core', 'js-main', 'js-apps', 'js-background']);
+gulp.task('js', ['js-core', 'js-main', 'js-background']);
 
 gulp.task('js-core', function () {
     return gulp.src([
-        CONF.src + '/js/queue.js',
-        CONF.src + '/js/channel.js',
-        CONF.src + '/js/history.js',
-        CONF.src + '/js/zepto.js',
-        CONF.src + '/js/parseDOM.js',
-        CONF.src + '/js/tips.js',
-        CONF.src + '/js/clipboard.js'
+        CONF.src + '/js/core/*.js'
     ])
         .pipe(concat('core.js'))
         .pipe(uglify())
@@ -62,8 +58,8 @@ gulp.task('js-core', function () {
 
 gulp.task('js-main', function () {
     return gulp.src([
-        CONF.src + '/js/view.js',
-        CONF.src + '/js/uploader.js',
+        CONF.src + '/js/modules/*.js',
+        CONF.src + '/js/app/*.js',
         CONF.src + '/js/bondage.js'
     ])
         .pipe(concat('main.js'))
@@ -71,15 +67,9 @@ gulp.task('js-main', function () {
         .pipe(gulp.dest(CONF.build + '/js'));
 });
 
-gulp.task('js-apps', function () {
-    return gulp.src(CONF.src + '/js/app/*.js')
-        .pipe(concat('apps.js'))
-        .pipe(uglify())
-        .pipe(gulp.dest(CONF.build + '/js'));
-});
-
 gulp.task('js-background', function () {
-    return gulp.src([CONF.src + '/js/background.js'])
+    return gulp.src([CONF.src + '/js/background/*.js'])
+        .pipe(concat('background.js'))
         .pipe(uglify())
         .pipe(gulp.dest(CONF.build + '/js'));
 });
@@ -87,7 +77,7 @@ gulp.task('js-background', function () {
 gulp.task('html', function () {
     return gulp.src([CONF.src + '/*.html'])
         .pipe(htmlReplace({
-            js: ['js/core.js', 'js/apps.js', 'js/main.js'],
+            js: ['js/core.js', 'js/main.js'],
             css: 'style/css/style.css'
         }))
         .pipe(gulp.dest(CONF.build));

@@ -39,7 +39,7 @@
         }
     }
 
-    channel.register(name, 'show', tip);
+    Channel.register(name, 'show', tip);
     //global['tips'] = tip;
 
 })(Zepto, window);

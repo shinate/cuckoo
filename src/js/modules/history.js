@@ -1,6 +1,8 @@
 (function (global) {
 
-    global['historyManager'] = (function () {
+    var name = 'historyManager';
+
+    global[name] = (function () {
 
         function add(list) {
             if (list == null || typeof list === 'string' || (list instanceof Array) && list.length === 0) {
@@ -22,7 +24,7 @@
             return global.localStorage.removeItem('history');
         }
 
-        channel.register('historyManager', 'add', add);
+        Channel.register(name, 'add', add);
 
         return {
             add: add,
@@ -31,4 +33,4 @@
         }
     })();
 
-})(window);
+})(this || window);

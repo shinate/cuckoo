@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>uploader</title>
+    <title></title>
     <!-- build:css -->
     <link rel="stylesheet/less" type="text/css" href="style/less/style.less">
     <script src="dev/less.min.js"></script>
@@ -35,7 +35,14 @@
         </div>
     </li>
     <li node-type="urlsText">
-        <textarea node-type="urlsTextBox"></textarea>
+        <div>
+            <nav class="toolbar">
+                <button action-type="copy" class="fa fa-copy"></button>
+                <button action-type="markdown">![Markdown</button>
+                <button action-type="image">&lt;IMG</button>
+            </nav>
+            <textarea readonly node-type="urlsTextBox"></textarea>
+        </div>
     </li>
     <li node-type="history">
         <ul node-type="historyBox"></ul>
@@ -43,16 +50,16 @@
 </ul>
 <ul id="list" class="list clearfix"></ul>
 <!-- build:js -->
-<script src="js/queue.js"></script>
-<script src="js/channel.js"></script>
-<script src="js/history.js"></script>
-<script src="js/zepto.js"></script>
-<script src="js/parseDOM.js"></script>
-<script src="js/tips.js"></script>
-<script src="js/clipboard.js"></script>
+<script src="js/core/zepto.js"></script>
+<script src="js/core/zepto.parseDOM.js"></script>
+<script src="js/core/queue.js"></script>
+<script src="js/core/Channel.js"></script>
+<script src="js/modules/history.js"></script>
+<script src="js/modules/tips.js"></script>
+<script src="js/modules/clipboard.js"></script>
+<script src="js/modules/view.js"></script>
+<script src="js/modules/uploader.js"></script>
 <script src="js/app/weibo.js"></script>
-<script src="js/view.js"></script>
-<script src="js/uploader.js"></script>
 <script src="js/bondage.js"></script>
 <!-- endbuild -->
 </body>

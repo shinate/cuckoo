@@ -34,6 +34,7 @@ body {
       font-size: 24px;
       color: @const-color-link-normal;
       cursor: pointer;
+      transition: all 300ms;
 
       &:hover {
         color: @const-color-link-hover;
@@ -80,7 +81,12 @@ body {
     width: 100%;
     padding: 32px;
     box-sizing: border-box;
-    transition: transform 500ms;
+    transition: all 500ms;
+    background-color: rgba(0, 0, 0, 0);
+
+    &.mask {
+      background-color: rgba(0, 0, 0, .8);
+    }
   }
 
   > [node-type="upload"] {
@@ -111,16 +117,61 @@ body {
     width: 100%;
     height: 100%;
 
-    > textarea {
+    > div {
+      height: 100%;
+      width: 100%;
       box-sizing: border-box;
-      padding: 16px;
+      padding: 48px 8px 8px;
+      background-color: fadeout(@const-color-font-normal, 5%);
+      position: relative;
+    }
+
+    .toolbar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 8px 8px 0 8px;
+      height: 40px;
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+
+      > button {
+        cursor: pointer;
+        float: left;
+        height: 32px;
+        line-height: 32px;
+        font-size: 14px;
+        padding: 0 10px;
+        margin-right: 8px;
+        display: block;
+        border: 0 none;
+        border-radius: 3px;
+        background: none;
+        color: @const-color-link-darken-normal;
+        transition: all 300ms;
+
+        &:hover {
+          background-color: @const-color-link-darken-disable;
+          color: @const-color-link-darken-normal;
+        }
+      }
+
+      .markdown, .image {
+        font-family: sans-serif;
+      }
+    }
+
+    textarea {
       font-size: 14px;
-      border: 5px solid fadeout(@const-color-font-normal, 2%);
       height: 100%;
       width: 100%;
       display: block;
-      background-color: fadeout(#d0d0d0, 5%);
       resize: none;
+      border: 0 none;
+      background-color: lighten(@const-color-font-normal, 20%);
+      box-sizing: border-box;
+      padding: 8px;
     }
   }
 
@@ -134,13 +185,28 @@ body {
 
       > li {
         background-color: fadeout(#999999, 5%);
+        position: relative;
+        min-height: 96px;
 
-        div {
+        .preview {
+          position: absolute;
+          left: 0;
+          top: 0;
           height: 96px;
           width: 128px;
           background-repeat: no-repeat;
           background-position: 50% 50%;
           background-size: cover;
+        }
+
+        .detail {
+          padding-left: 128px;
+
+          .copy {
+            input {
+              width: 100%
+            }
+          }
         }
 
         &:not(:last-child) {

@@ -27,7 +27,7 @@
     it.bind = function () {
         for (var type in it.custEvts) {
             if (it.custEvts.hasOwnProperty(type)) {
-                channel.register(it.name, type, it.custEvts[type]);
+                Channel.register(it.name, type, it.custEvts[type]);
             }
         }
 
@@ -66,7 +66,7 @@
         it.resetTaskList();
         files = it.getImageList(files);
         if (files.length) {
-            channel.fire(it.name, 'uploadStart');
+            Channel.fire(it.name, 'uploadStart');
             it.createUploadQueue(files);
         }
     };
@@ -94,12 +94,13 @@
         // Accomplished!!!
         if (s.length === reject.length + reslove.length) {
             it.resetTaskList();
-            channel.fire(it.name, 'uploadComplete', [it.getAllUrls()]);
-            channel.fire(it.name, 'saveToHistory', [
-                newPics.map(function (item) {
-                    return {src: item};
-                })
-            ]);
+            Channel.fire(it.name, 'uploadComplete', [it.getAllUrls()]);
+            if (newPics.length)
+                Channel.fire(it.name, 'saveToHistory', [
+                    newPics.map(function (item) {
+                        return {src: item};
+                    })
+                ]);
         }
     };
 
@@ -125,7 +126,7 @@
         }
         taskManager.upload.defer(function (next) {
             it.uploading(i);
-            channel.fire(it.name, 'uploadTo', [
+            Channel.fire(it.name, 'uploadTo', [
                 imageData, function (url) {
                     if (url != null) {
                         it.uploaded(i, url);
@@ -182,12 +183,12 @@
     };
 
     it.copyToClipboard = function (text) {
-        channel.fire(it.name, 'copyToClipboard', text);
+        Channel.fire(it.name, 'copyToClipboard', text);
     };
 
     it.getAllUrls = function () {
         var urls = [];
-        nodes.list.find('.preview').each(function () {
+        nodes.list.find('.preview.uploaded').each(function () {
             urls.push($(this).data('url'));
         });
         return urls;

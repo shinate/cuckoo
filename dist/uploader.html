@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>uploader</title>
+    <title></title>
     <link rel="stylesheet" href="style/css/style.css">
 </head>
 <body>
@@ -32,7 +32,14 @@
         </div>
     </li>
     <li node-type="urlsText">
-        <textarea node-type="urlsTextBox"></textarea>
+        <div>
+            <nav class="toolbar">
+                <button action-type="copy" class="fa fa-copy"></button>
+                <button action-type="markdown">![Markdown</button>
+                <button action-type="image">&lt;IMG</button>
+            </nav>
+            <textarea readonly node-type="urlsTextBox"></textarea>
+        </div>
     </li>
     <li node-type="history">
         <ul node-type="historyBox"></ul>
@@ -40,7 +47,6 @@
 </ul>
 <ul id="list" class="list clearfix"></ul>
 <script src="js/core.js"></script>
-<script src="js/apps.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
