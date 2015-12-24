@@ -7,6 +7,7 @@
     Channel.bind(['uploader', 'uploadStart'], ['view', 'closePlat']);
     Channel.bind(['uploader', 'uploadStart'], ['view', 'uploadLock']);
     Channel.bind(['uploader', 'uploadComplete'], ['view', 'uploadUnlock']);
+    Channel.bind(['uploader', 'uploadAllSuccess'], ['view', 'showUrlsText']);
     Channel.bind(['uploader', 'uploadComplete'], ['view', 'updateUrlsText']);
     Channel.bind(['uploader', 'copyToClipboard'], ['clipboard', 'copy']);
     Channel.bind(['uploader', 'saveToHistory'], ['historyManager', 'add']);

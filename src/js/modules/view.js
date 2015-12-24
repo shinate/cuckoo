@@ -191,8 +191,10 @@
                 it.custEvts.copyUnlock();
                 it.custEvts.urlsTextUnlock();
                 it.custEvts.trashUnlock();
-                it.switchPlatform('urlsText');
             }
+        },
+        showUrlsText: function () {
+            it.switchPlatform('urlsText');
         },
         uploadLock: function () {
             lock.uploadBtn = true;

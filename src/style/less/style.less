@@ -355,12 +355,17 @@ body {
 
     &.uploaderr {
       background: @const-color-preview-uploaderr;
+
+      > button.retry {
+        display: block;
+        background: @const-color-preview-uploaderr;
+      }
     }
 
     &.uploaded {
       background: @const-color-preview-uploaded;
 
-      > button[action-type="copy"] {
+      > button.copy {
         display: block;
         background: @const-color-preview-uploaded;
       }

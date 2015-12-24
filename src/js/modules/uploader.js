@@ -5,14 +5,13 @@
 
 (function ($, global) {
 
+    var name = 'uploader';
     var it = {};
     var nodes = {};
     var previewList = [];
     var taskManager = {};
 
     var ALLOWED_TYPE = ['image/png', 'image/jpeg', 'image/gif', 'image/bmp'];
-
-    it.name = 'uploader';
 
     it.init = function () {
         it.parseDOM();
@@ -27,7 +26,7 @@
     it.bind = function () {
         for (var type in it.custEvts) {
             if (it.custEvts.hasOwnProperty(type)) {
-                Channel.register(it.name, type, it.custEvts[type]);
+                Channel.register(name, type, it.custEvts[type]);
             }
         }
 
@@ -39,9 +38,16 @@
     };
 
     it.evts = {
-        'copy': function (e) {
+        copy: function (e) {
             e.preventDefault();
             it.copyToClipboard($(this).parents('.preview').data('url'));
+            return false;
+        },
+        retry: function (e) {
+            e.preventDefault();
+            Channel.fire('tips', 'show', 'Coming soon...');
+            // TODO
+            // it.retry(files);
             return false;
         }
     };
@@ -65,12 +71,16 @@
         return imageList;
     };
 
+    it.retry = function () {
+
+    };
+
     it.startUpload = function (files) {
         it.resetTaskList();
         var sl = files.length;
         files = it.getImageList(files);
         if (files.length) {
-            Channel.fire(it.name, 'uploadStart');
+            Channel.fire(name, 'uploadStart');
             it.createUploadQueue(files);
         }
 
@@ -102,12 +112,20 @@
             }
         });
 
-        // Accomplished!!!
+        // Queue accomplished!!!
         if (s.length === reject.length + reslove.length) {
-            it.resetTaskList();
-            Channel.fire(it.name, 'uploadComplete', [it.getAllUrls()]);
+            var allUrls = it.getAllUrls();
+
+            Channel.fire(name, 'uploadComplete', [allUrls]);
+
+            if (reject.length === 0) {
+                Channel.fire('tips', 'show', '上传成功(' + reslove.length + '/' + s.length + ')');
+                Channel.fire(name, 'uploadAllSuccess', [allUrls]);
+            } else {
+                // Channel.fire('tips', 'show', '上传成功(' + reslove.length + '/' + s.length + '), ' + '失败(' + reject.length + ')');
+            }
             if (newPics.length) {
-                Channel.fire(it.name, 'saveToHistory', [
+                Channel.fire(name, 'saveToHistory', [
                     newPics.map(function (item) {
                         return {
                             src: item,
@@ -116,6 +134,7 @@
                     })
                 ]);
             }
+            it.resetTaskList();
         }
     };
 
@@ -141,7 +160,7 @@
         }
         taskManager.upload.defer(function (next) {
             it.uploading(i);
-            Channel.fire(it.name, 'uploadTo', [
+            Channel.fire(name, 'uploadTo', [
                 imageData, function (url) {
                     if (url != null) {
                         it.uploaded(i, url);
@@ -162,7 +181,8 @@
         var preview = $('' +
             '<li class="preview">' +
             '<div class="picture" style="background-image:url(' + dp + ')"></div>' +
-            '<button action-type="copy" class="fa fa-copy"></button>' +
+            '<button title="复制到剪切板" action-type="copy" class="copy fa fa-copy"></button>' +
+            '<button title="重试" action-type="retry" class="retry fa fa-cloud-upload"></button>' +
             '</li>');
         nodes.list.append(preview);
         previewList.push(preview);
@@ -198,7 +218,7 @@
     };
 
     it.copyToClipboard = function (text) {
-        Channel.fire(it.name, 'copyToClipboard', text);
+        Channel.fire(name, 'copyToClipboard', text);
     };
 
     it.getAllUrls = function () {
