@@ -7,39 +7,31 @@
     var name = 'tips';
     var lsn = {};
 
+    var tipEl = $('<div id="tips" class="tips"><p></p></div>');
+    body.append(tipEl);
+    tipEl.on('mouseenter', clearTimer).on('mouseleave', autoHide);
+
+    function autoHide(time) {
+        lsn.hide = setTimeout(function () {
+            //tip.addClass('hide');
+            tipEl.removeClass('show');
+        }, time || defaultTime);
+    }
+
+    function clearTimer() {
+        lsn.hide && clearTimeout(lsn.hide);
+    }
+
     function tip(content, time) {
-        function autoHide() {
-            lsn.hide = setTimeout(function () {
-                //tip.addClass('hide');
-                tip.removeClass('show');
-                lsn.remove = setTimeout(function () {
-                    tip.remove();
-                }, 500);
-            }, time);
-        }
-
-        function clearTimer() {
-            lsn.hide && clearTimeout(lsn.hide);
-            lsn.remove && clearTimeout(lsn.remove);
-        }
-
         if ($.trim(content)) {
             clearTimer();
-            time = time || defaultTime;
-            var tip = $('#tips');
-            if (tip.length === 0) {
-                tip = $('<div id="tips" class="tips"><p></p></div>');
-                body.append(tip);
-                tip.on('mouseenter', clearTimer).on('mouseleave', autoHide);
-            }
-            tip.find('p').html(content);
-            tip.css('z-index', Z++);
-            tip.addClass('show');
-            autoHide()
+            tipEl.find('p').html(content);
+            tipEl.css('z-index', Z++);
+            tipEl.addClass('show');
+            autoHide(time || defaultTime);
         }
     }
 
     Channel.register(name, 'show', tip);
-    //global['tips'] = tip;
 
 })(Zepto, window);

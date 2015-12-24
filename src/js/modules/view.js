@@ -7,6 +7,12 @@
     var cache = {};
     var LSN = {};
 
+    var closeBtn = '' +
+        '<nav action-type="closeBtn" class="closeBtn">' +
+        '<button class="fa fa-angle-double-right"></button>' +
+        '<b class="fa fa-circle"></b>' +
+        '</nav>';
+
     it.init = function () {
         it.parseDOM();
         it.bind();
@@ -18,10 +24,11 @@
         nodes.bar = $('#bar');
         nodes.platform = $('#platform');
 
+        nodes.platform.children().prepend($(closeBtn));
+
         nodes.body.addClass('right');
-        it.switchPlatform('upload');
-        it.custEvts.copyLock();
-        it.custEvts.urlsTextLock();
+
+        it.reset();
     };
 
     it.bind = function () {
@@ -94,6 +101,14 @@
                 e.preventDefault();
                 it.renderHistory();
                 return false;
+            },
+            trashBtn: function (e) {
+                e.preventDefault();
+                if (!lock.trashBtn) {
+                    it.reset();
+                    Channel.fire(name, 'reset');
+                }
+                return false;
             }
         },
         upload: {
@@ -135,7 +150,7 @@
                 }).join('\n'));
                 return false;
             },
-            ubb: function () {
+            ubb: function (e) {
                 e.preventDefault();
                 nodes.urlsTextBox.val(cache.urls.map(function (url) {
                     return '[IMG]' + url + '[/IMG]';
@@ -145,6 +160,21 @@
             copy: function (e) {
                 e.preventDefault();
                 Channel.fire(name, 'copyAllToClipboard', nodes.urlsTextBox.val());
+                return false;
+            },
+            undo: function (e) {
+                e.preventDefault();
+                nodes.urlsTextBox.val(cache.urls.join('\n'));
+                return false;
+            },
+            closeBtn: function (e) {
+                e.preventDefault();
+                it.switchPlatform();
+                return false;
+            },
+            selectAll: function (e) {
+                e.preventDefault();
+                $(this).get(0).select();
                 return false;
             }
         }
@@ -160,7 +190,7 @@
                 nodes.urlsTextBox.val(urls.join('\n'));
                 it.custEvts.copyUnlock();
                 it.custEvts.urlsTextUnlock();
-                console.log(urls);
+                it.custEvts.trashUnlock();
                 it.switchPlatform('urlsText');
             }
         },
@@ -169,6 +199,7 @@
             nodes.uploadBtn.addClass('disable');
             it.custEvts.copyLock();
             it.custEvts.urlsTextLock();
+            it.custEvts.trashLock();
         },
         uploadUnlock: function () {
             lock.uploadBtn = false;
@@ -189,6 +220,14 @@
         urlsTextUnlock: function () {
             lock.urlsTextBtn = false;
             nodes.urlsTextBtn.removeClass('disable');
+        },
+        trashLock: function () {
+            lock.trashBtn = true;
+            nodes.trashBtn.addClass('disable');
+        },
+        trashUnlock: function () {
+            lock.trashBtn = false;
+            nodes.trashBtn.removeClass('disable');
         }
     };
 
@@ -198,7 +237,7 @@
             global.clearTimeout(LSN.mask);
         }
         if (!name) {
-            els = nodes.platform.find('li');
+            els = nodes.platform.children();
             nodes.body.css('overflow', '');
         } else {
             target = nodes.platform.find('[node-type="' + name + '"]');
@@ -208,7 +247,6 @@
             LSN.mask = global.setTimeout(function () {
                 target.addClass('mask');
             }, 500);
-
         }
         els.each(function () {
             var el = $(this);
@@ -228,9 +266,11 @@
                 return '<li class="clearfix">' +
                     '<div class="preview" style="background-image:url(' + item.src + ')"></div>' +
                     '<div class="detail">' +
-                    '<input readonly value="' + item.src + '">' +
+                    '<div class="url">' +
+                    '<input action-type="selectAll" readonly value="' + item.src + '">' +
                     '</div>' +
-                    (item.time ? ('<p></p>') : '') +
+                    (item.time ? '<p class="time">' + new Date(item.time).Format('yyyy-mm-dd h:i:s') + '</p>' : '') +
+                    '</div>' +
                     '</li>';
             }).join('\n'));
             it.switchPlatform('history');
@@ -238,6 +278,15 @@
             Channel.fire('tips', 'show', '没有上传记录');
         }
     };
+
+    it.reset = function () {
+        nodes.urlsTextBox.val('');
+        cache.urls = null;
+        it.switchPlatform('upload');
+        it.custEvts.copyLock();
+        it.custEvts.urlsTextLock();
+        it.custEvts.trashLock();
+    }
 
     it.init();
 

@@ -46,7 +46,7 @@
                     onComplete(pid2url(rs.data.pics.pic_1.pid, 'large'));
                 } else {
                     onComplete(null);
-                    Channel.fire('tips', 'show', '上传失败, 请先<a href="http://weibo.com/" target="_blank">登录</a>围脖', 5000);
+                    Channel.fire('tips', 'show', ['上传失败, 请先<a href="http://weibo.com/" target="_blank">登录</a>围脖', 5000]);
                 }
             }
         };

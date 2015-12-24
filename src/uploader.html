@@ -22,6 +22,9 @@
     <li>
         <button title="历史上传" node-type="historyBtn" action-type="historyBtn" class="fa fa-history"></button>
     </li>
+    <li>
+        <button title="清空本次上传" node-type="trashBtn" action-type="trashBtn" class="fa fa-trash"></button>
+    </li>
 </ul>
 <ul id="platform">
     <li node-type="upload">
@@ -37,11 +40,13 @@
     <li node-type="urlsText">
         <div>
             <nav class="toolbar">
-                <button action-type="copy" class="fa fa-copy"></button>
-                <button action-type="markdown">![Markdown</button>
-                <button action-type="image">&lt;IMG</button>
+                <button action-type="copy" class="fl fa fa-copy" title="复制到剪切板"></button>
+                <button action-type="markdown" class="fl" title="转换为Markdown图片标签">![Markdown</button>
+                <button action-type="image" class="fl" title="转换为HTML图片标签">&lt;IMG</button>
+                <button action-type="ubb" class="fl" title="转换为UBB图片标签">[UBB]</button>
+                <button action-type="undo" class="fr fa fa-undo" title="还原"></button>
             </nav>
-            <textarea readonly node-type="urlsTextBox"></textarea>
+            <textarea action-type="selectAll" readonly node-type="urlsTextBox"></textarea>
         </div>
     </li>
     <li node-type="history">
@@ -49,11 +54,13 @@
     </li>
 </ul>
 <ul id="list" class="list clearfix"></ul>
+<i class="thanks">Create by.shinate &copy; 2015 鸣谢 围脖是个好图床 @zythum_朱一</i>
 <!-- build:js -->
 <script src="js/core/zepto.js"></script>
 <script src="js/core/zepto.parseDOM.js"></script>
 <script src="js/core/queue.js"></script>
 <script src="js/core/Channel.js"></script>
+<script src="js/core/Date.js"></script>
 <script src="js/modules/history.js"></script>
 <script src="js/modules/tips.js"></script>
 <script src="js/modules/clipboard.js"></script>

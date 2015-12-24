@@ -49,6 +49,9 @@
     it.custEvts = {
         upload: function (files) {
             it.startUpload(files);
+        },
+        reset: function () {
+            it.reset();
         }
     };
 
@@ -64,11 +67,19 @@
 
     it.startUpload = function (files) {
         it.resetTaskList();
+        var sl = files.length;
         files = it.getImageList(files);
         if (files.length) {
             Channel.fire(it.name, 'uploadStart');
             it.createUploadQueue(files);
         }
+
+        if (files.length === 0)
+            Channel.fire('tips', 'show', '没有检测到图片');
+        else if (files.length === sl)
+            Channel.fire('tips', 'show', '开始上传' + files.length + '个图片');
+        else
+            Channel.fire('tips', 'show', '开始上传' + files.length + '个图片, 忽略' + (sl - files.length) + '个无效文件');
     };
 
     it.createUploadQueue = function (images) {
@@ -95,12 +106,16 @@
         if (s.length === reject.length + reslove.length) {
             it.resetTaskList();
             Channel.fire(it.name, 'uploadComplete', [it.getAllUrls()]);
-            if (newPics.length)
+            if (newPics.length) {
                 Channel.fire(it.name, 'saveToHistory', [
                     newPics.map(function (item) {
-                        return {src: item};
+                        return {
+                            src: item,
+                            time: +new Date
+                        };
                     })
                 ]);
+            }
         }
     };
 
@@ -197,6 +212,11 @@
     it.resetTaskList = function () {
         previewList = [];
         taskManager = {};
+    };
+
+    it.reset = function () {
+        it.resetTaskList();
+        nodes.list.empty();
     };
 
     it.init();

@@ -4,6 +4,8 @@
 
 body {
   background-color: #333333;
+  background: url(../images/background.png) no-repeat fixed 50% 100%;
+  background-size: cover;
 }
 
 #bar {
@@ -63,6 +65,7 @@ body {
 
     > li {
       padding-right: 32px + @const-bar-width;
+      padding-left: 16px + @const-bar-width;
 
       &.show {
         transform: translateX(-100%);
@@ -86,6 +89,71 @@ body {
 
     &.mask {
       background-color: rgba(0, 0, 0, .8);
+    }
+
+    > .closeBtn {
+      cursor: pointer;
+      position: absolute;
+      overflow: hidden;
+      right: 100%;
+      top: 50%;
+      margin-top: -80px;
+      margin-right: -16px - @const-bar-width;
+      height: 160px;
+      width: 48px;
+
+      > * {
+        cursor: pointer;
+        transition: all 300ms;
+      }
+
+      > b {
+        position: absolute;
+        display: block;
+        height: 100%;
+        width: 100%;
+        left: 0;
+        top: 0;
+        line-height: 160px;
+        font-size: 168px;
+        padding-left: 16px;
+
+        &:before {
+          color: @const-close-btn-base;
+        }
+      }
+
+      > button {
+        float: right;
+        padding: 0 8px;
+        position: relative;
+        z-index: 1;
+        border: 0 none;
+        background: none;
+        line-height: 160px;
+
+        &:before {
+          font-size: 24px;
+          color: lighten(@const-close-btn-base, 20%);
+        }
+      }
+
+      &:hover {
+        > b {
+          transform: translateX(-10px);
+
+          &:before {
+            color: lighten(@const-close-btn-base, 5%);
+          }
+        }
+        > button {
+          transform: translateX(-5px) scale(1.2, 1.2);
+
+          &:before {
+            color: lighten(@const-close-btn-base, 50%);
+          }
+        }
+      }
     }
   }
 
@@ -138,18 +206,24 @@ body {
 
       > button {
         cursor: pointer;
-        float: left;
         height: 32px;
         line-height: 32px;
         font-size: 14px;
         padding: 0 10px;
-        margin-right: 8px;
         display: block;
         border: 0 none;
         border-radius: 3px;
         background: none;
         color: @const-color-link-darken-normal;
         transition: all 300ms;
+
+        &.fl {
+          margin-right: 8px;
+        }
+
+        &.fr {
+          margin-left: 8px;
+        }
 
         &:hover {
           background-color: @const-color-link-darken-disable;
@@ -184,7 +258,8 @@ body {
       background-color: fadeout(#000000, 5%);
 
       > li {
-        background-color: fadeout(#999999, 5%);
+        //background-color: fadeout(#999999, 5%);
+        background-image: -webkit-gradient(linear, left top, left bottom, from(#7a7a7a), to(#6a6a6a));
         position: relative;
         min-height: 96px;
 
@@ -202,10 +277,22 @@ body {
         .detail {
           padding-left: 128px;
 
-          .copy {
+          > * {
+            margin: 0 12px;
+            padding-top: 12px;
+          }
+
+          .url {
             input {
-              width: 100%
+              width: 100%;
+              border: 0 none;
+              padding: 3px;
+              box-sizing: border-box;
+              font-size: 14px;
             }
+          }
+          .time {
+            font-size: 14px;
           }
         }
 
@@ -333,5 +420,19 @@ body {
     width: 400px;
     text-align: center;
     color: @const-color-font-normal;
+  }
+}
+
+.thanks {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  color: @const-color-link-darken-normal;
+
+  body.right & {
+    font-size: 12px;
+    margin-left: 5px;
+    font-style: normal;
+    transform: translateX(-50%) rotateZ(90deg) translateX(-25%) scale(0.5);
   }
 }

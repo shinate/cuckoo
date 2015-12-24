@@ -25,6 +25,7 @@
         }
 
         Channel.register(name, 'add', add);
+        Channel.register(name, 'clear', clear);
 
         return {
             add: add,
