@@ -11,13 +11,13 @@ var dc = require('gulp-drop-comments')
 
 var CONF = {
     src: 'src',
-    build: 'dist',
+    build: 'dist/Altria',
     bower: 'bower_components'
 };
 
 gulp.task('default', ['build']);
 
-gulp.task('build', ['style', 'js', 'html', 'others']);
+gulp.task('build', ['style', 'js', 'html', 'manifest']);
 
 gulp.task('style', ['style-css', 'style-image', 'style-font']);
 
@@ -83,9 +83,11 @@ gulp.task('html', function () {
         .pipe(gulp.dest(CONF.build));
 });
 
-gulp.task('others', function () {
-    return gulp.src([CONF.src + '/manifest.json'])
-        .pipe(gulp.dest(CONF.build));
+gulp.task('manifest', ['html'], function (cb) {
+    var manifest = JSON.parse(fs.readFileSync(CONF.src + '/manifest.json').toString());
+    manifest.background.scripts = ['js/background.js'];
+    fs.writeFileSync(CONF.build + '/manifest.json', new Buffer(JSON.stringify(manifest)));
+    cb();
 });
 
 gulp.task('clean', function () {

@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/shinate/mymothertoldmeweiboisreallyagoodpicturedisk#readme",
   "dependencies": {
+    "fs": "0.0.2",
     "gulp-drop-comments": "0.0.1"
   }
 }
