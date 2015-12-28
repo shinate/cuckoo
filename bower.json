@@ -1,5 +1,5 @@
 {
-  "name": "mymothertoldmeweiboisreallyagoodpicturedisk",
+  "name": "next-door-to-uncle-wang",
   "authors": [
     "shinate <shine.wangrs@gmail.com>"
   ],
@@ -7,5 +7,9 @@
   "main": "",
   "moduleType": [],
   "license": "MIT",
-  "homepage": ""
+  "homepage": "",
+  "dependencies": {
+    "less": "~2.5.3",
+    "queue-async": "~1.0.7"
+  }
 }
