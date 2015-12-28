@@ -1,7 +1,7 @@
 {
-  "name": "mymothertoldmeweiboisreallyagoodpicturedisk",
+  "name": "next-door-to-uncle-wang",
   "version": "0.1.2",
-  "description": "",
+  "description": "Uncle Wang to take you to bed(image hosting)",
   "devDependencies": {
     "gulp-clean": "^0.3.1",
     "gulp-concat": "^2.6.0",
@@ -20,12 +20,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shinate/mymothertoldmeweiboisreallyagoodpicturedisk.git"
+    "url": "git+https://github.com/shinate/Next-door-to-Uncle-Wang.git"
   },
   "author": "shinate",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/shinate/mymothertoldmeweiboisreallyagoodpicturedisk/issues"
+    "url": "https://github.com/shinate/Next-door-to-Uncle-Wang/issues"
   },
-  "homepage": "https://github.com/shinate/mymothertoldmeweiboisreallyagoodpicturedisk#readme"
+  "homepage": "https://github.com/shinate/Next-door-to-Uncle-Wang#readme",
+  "keywords": [
+    "image",
+    "hosting",
+    "bed",
+    "farm",
+    "picture"
+  ]
 }

@@ -1,33 +1,19 @@
-# ??
+# Next door to Uncle Wang
 
-## 我需要一个高大上的名字
+Uncle Wang to take you to bed(image hosting)
 
-刘源
+## Installation
 
-- 鸠 \[杜鹃\] cuckoo
-- 隔壁老王 Uncle Wang next door ？
-    - Uncle WANG
+1. Open chrome browser
+1. type in the address bar: 'chrome://extensions'
+1. Drag the file to the browser plug-in window
 
-鹏辉
+## I need a trendy name
 
-- 猕猴桃 kiwi
+## I want an atmospheric official website to show their
 
-丰硕
+## I want to support more applications Fig bed
 
-- kraken 北海巨妖
+## I have more beautiful interface effects
 
-罗心成
-
-- great-one
-
-雷全
-
-- Pharaoh 法老
-
-## 我要一个大气的官网用来展示自己
-
-## 我要支持更多的图床
-
-## 我要有更亮丽的界面效果
-
-## 我需要你...
+## I need you...

@@ -11,7 +11,7 @@ var dc = require('gulp-drop-comments')
 
 var CONF = {
     src: 'src',
-    build: 'dist/Altria',
+    build: 'dist/Next-door-to-Uncle-Wang',
     bower: 'bower_components'
 };
 
