@@ -1,4 +1,4 @@
-// TODO Tieba
+// TODO 个你妹啊~ Tieba不能外链啊~ 让偶们携手拯救失散儿童吧~
 //(function ($, global) {
 //
 //    var tpsURL = 'http://tieba.baidu.com/dc/common/imgtbs';

@@ -1,6 +1,4 @@
-# Next door to Uncle Wang
-
-Uncle Wang to take you to bed(image hosting)
+# cuckoo
 
 ## Installation
 
