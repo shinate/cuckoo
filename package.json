@@ -1,6 +1,6 @@
 {
   "name": "cuckoo",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Uncle Wang to take you to bed(image hosting)",
   "devDependencies": {
     "gulp-clean": "^0.3.1",
