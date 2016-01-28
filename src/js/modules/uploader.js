@@ -173,7 +173,7 @@
             taskManager.status[i] = global.setTimeout(function () {
                 it.uploaderr(i);
                 next();
-            }, 8000);
+            }, 20000);
         });
     };
 
