@@ -19,7 +19,7 @@
     };
 
     it.parseDOM = function () {
-        nodes = $('#bar,#platform').parseDOM();
+        nodes = $('#bar, #platform').parseDOM();
         nodes.body = $(document.body);
         nodes.bar = $('#bar');
         nodes.platform = $('#platform');
@@ -262,23 +262,41 @@
     };
 
     it.renderHistory = function () {
-        var history = historyManager.load();
-        if (history.length) {
-            nodes.historyBox.html(history.reverse().map(function (item) {
-                return '<li class="clearfix">' +
-                    '<div class="preview" style="background-image:url(' + item.src + ')"></div>' +
-                    '<div class="detail">' +
-                    '<div class="url">' +
-                    '<input action-type="selectAll" readonly value="' + item.src + '">' +
-                    '</div>' +
-                    (item.time ? '<p class="time">' + new Date(item.time).Format('yyyy-mm-dd h:i:s') + '</p>' : '') +
-                    '</div>' +
-                    '</li>';
-            }).join('\n'));
-            it.switchPlatform('history');
-        } else {
-            Channel.fire('tips', 'show', '没有上传记录');
-        }
+        Channel.fire(name, 'loadHistory', function (history) {
+            if (history.length) {
+                nodes.historyBox.html(history.reverse().map(function (item) {
+                    return '<li class="clearfix">' +
+                        '<div class="preview" style="background-image:url(' + item.src + ')"></div>' +
+                        '<div class="detail">' +
+                        '<div class="url">' +
+                        '<input action-type="selectAll" readonly value="' + item.src + '">' +
+                        '</div>' +
+                        (item.time ? '<p class="time">' + new Date(item.time).Format('yyyy-mm-dd h:i:s') + '</p>' : '') +
+                        '</div>' +
+                        '</li>';
+                }).join('\n'));
+                it.switchPlatform('history');
+            } else {
+                Channel.fire('tips', 'show', '没有上传记录');
+            }
+        });
+        //var history = historyManager.load();
+        //if (history.length) {
+        //    nodes.historyBox.html(history.reverse().map(function (item) {
+        //        return '<li class="clearfix">' +
+        //            '<div class="preview" style="background-image:url(' + item.src + ')"></div>' +
+        //            '<div class="detail">' +
+        //            '<div class="url">' +
+        //            '<input action-type="selectAll" readonly value="' + item.src + '">' +
+        //            '</div>' +
+        //            (item.time ? '<p class="time">' + new Date(item.time).Format('yyyy-mm-dd h:i:s') + '</p>' : '') +
+        //            '</div>' +
+        //            '</li>';
+        //    }).join('\n'));
+        //    it.switchPlatform('history');
+        //} else {
+        //    Channel.fire('tips', 'show', '没有上传记录');
+        //}
     };
 
     it.reset = function () {

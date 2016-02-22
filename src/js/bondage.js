@@ -1,8 +1,10 @@
 (function (global) {
+
     Channel.bind(['view', 'dropedFiles'], ['uploader', 'upload']);
     Channel.bind(['view', 'selectedFiles'], ['uploader', 'upload']);
     Channel.bind(['view', 'copyAllToClipboard'], ['clipboard', 'copy']);
     Channel.bind(['view', 'reset'], ['uploader', 'reset']);
+    Channel.bind(['view', 'loadHistory'], ['historyManager', 'load']);
 
     Channel.bind(['uploader', 'uploadStart'], ['view', 'closePlat']);
     Channel.bind(['uploader', 'uploadStart'], ['view', 'uploadLock']);

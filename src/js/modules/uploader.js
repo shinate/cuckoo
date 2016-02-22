@@ -10,6 +10,7 @@
     var nodes = {};
     var previewList = [];
     var taskManager = {};
+    var config = global.__CONFIG__;
 
     var ALLOWED_TYPE = ['image/png', 'image/jpeg', 'image/gif', 'image/bmp'];
 
@@ -45,9 +46,9 @@
         },
         retry: function (e) {
             e.preventDefault();
-            Channel.fire('tips', 'show', 'Coming soon...');
+            // Channel.fire('tips', 'show', 'Coming soon...');
             // TODO
-            // it.retry(files);
+            it.retry($(this).parent());
             return false;
         }
     };
@@ -71,8 +72,14 @@
         return imageList;
     };
 
-    it.retry = function () {
-
+    it.retry = function (el) {
+        if (!taskManager.hasOwnProperty('uploadStatus')) {
+            taskManager.uploadStatus = [];
+        }
+        el.removeClass('uploaderr');
+        taskManager.uploadStatus.push('pending');
+        previewList.push(el);
+        it.uploadTask(el.find('.picture').data('image'), previewList.length - 1);
     };
 
     it.startUpload = function (files) {
@@ -93,12 +100,12 @@
     };
 
     it.createUploadQueue = function (images) {
-        taskManager.status = new Array(images.length).fill('pending');
+        taskManager.uploadStatus = new Array(images.length).fill('pending');
         images.forEach(it.previewTask);
     };
 
     it.uploadQueueCompleteScan = function () {
-        var s = taskManager.status;
+        var s = taskManager.uploadStatus;
         var reject = s.filter(function (v) {
             return v === 'rejected' ? true : false;
         });
@@ -170,17 +177,18 @@
                     next();
                 }
             ]);
-            taskManager.status[i] = global.setTimeout(function () {
+            taskManager.uploadStatus[i] = global.setTimeout(function () {
                 it.uploaderr(i);
+                config.upload_timeout *= 1.5;
                 next();
-            }, 20000);
+            }, config.upload_timeout);
         });
     };
 
     it.createPreview = function (dp) {
         var preview = $('' +
             '<li class="preview">' +
-            '<div class="picture" style="background-image:url(' + dp + ')"></div>' +
+            '<div data-image="' + dp + '" class="picture" style="background-image:url(' + dp + ')"></div>' +
             '<button title="复制到剪切板" action-type="copy" class="copy fa fa-copy"></button>' +
             '<button title="重试" action-type="retry" class="retry fa fa-cloud-upload"></button>' +
             '</li>');
@@ -193,24 +201,24 @@
     };
 
     it.uploaderr = function (i) {
-        if (taskManager.status && taskManager.status[i] !== 'resloved') {
-            global.clearTimeout(taskManager.status[i]);
+        if (taskManager.uploadStatus && taskManager.uploadStatus[i] !== 'resloved') {
+            global.clearTimeout(taskManager.uploadStatus[i]);
             previewList[i].addClass('uploaderr');
-            taskManager.status[i] = 'rejected';
+            taskManager.uploadStatus[i] = 'rejected';
             it.uploadQueueCompleteScan();
         }
     };
 
     it.uploaded = function (i, url) {
-        if (url && taskManager.status && taskManager.status[i] !== 'rejected') {
-            global.clearTimeout(taskManager.status[i]);
+        if (url && taskManager.uploadStatus && taskManager.uploadStatus[i] !== 'rejected') {
+            global.clearTimeout(taskManager.uploadStatus[i]);
             var previewEL = previewList[i];
             previewEL.data('url', url);
             var p = new Image;
             p.onload = function () {
                 previewEL.addClass('uploaded');
                 previewEL.find('.picture').css('background-image', 'url(' + url + ')');
-                taskManager.status[i] = 'resloved';
+                taskManager.uploadStatus[i] = 'resloved';
                 it.uploadQueueCompleteScan();
             };
             p.src = url;

@@ -1,7 +1,7 @@
 (function ($, global) {
 
     var Z = 10000;
-    var defaultTime = 1500;
+    var defaultTime = 2000;
     var body = $(document.body);
 
     var name = 'tips';

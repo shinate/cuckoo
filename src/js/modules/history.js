@@ -2,36 +2,31 @@
 
     var name = 'historyManager';
 
-    global[name] = (function () {
-
-        function add(list) {
-            if (list == null || typeof list === 'string' || (list instanceof Array) && list.length === 0) {
-                return 0;
-            }
-
-            if (Object.prototype.toString.call(list) === '[object Object]') {
-                list = [list];
-            }
-            global.localStorage.setItem('history', JSON.stringify([].concat(load(), list)));
+    function add(list) {
+        if (list == null || typeof list === 'string' || (list instanceof Array) && list.length === 0) {
+            return 0;
         }
 
-        function load() {
-            var list = global.localStorage.getItem('history')
-            return list ? JSON.parse(list) : [];
+        if (Object.prototype.toString.call(list) === '[object Object]') {
+            list = [list];
         }
+        global.localStorage.setItem('history', JSON.stringify([].concat(load(), list)));
+    }
 
-        function clear() {
-            return global.localStorage.removeItem('history');
-        }
+    function load() {
+        var list = global.localStorage.getItem('history')
+        return list ? JSON.parse(list) : [];
+    }
 
-        Channel.register(name, 'add', add);
-        Channel.register(name, 'clear', clear);
+    function clear() {
+        return global.localStorage.removeItem('history');
+    }
 
-        return {
-            add: add,
-            load: load,
-            clear: clear
-        }
-    })();
+    Channel.register(name, 'add', add);
+    Channel.register(name, 'clear', clear);
+
+    Channel.register(name, 'load', function (cb) {
+        cb(load());
+    });
 
 })(this || window);
