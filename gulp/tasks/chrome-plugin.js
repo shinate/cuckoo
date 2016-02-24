@@ -1,6 +1,7 @@
 'use strict';
 
 var fs = require('fs');
+var exec = require('sync-exec');
 
 module.exports = function (gulp, PLUGIN, CONF) {
     gulp.task('chrome-plugin', ['js', 'style', 'html'], function (cb) {
@@ -13,5 +14,10 @@ module.exports = function (gulp, PLUGIN, CONF) {
                 fs.writeFileSync(CONF['chrome-plugin'] + '/manifest.json', new Buffer(JSON.stringify(manifest)));
                 cb();
             });
+    });
+
+    gulp.task('chrome-plugin-build', ['chrome-plugin'], function (cb) {
+        exec('/Applications/Google\\\ Chrome.app/Contents/MacOS/Google\\\ Chrome --pack-extension=./' + CONF['chrome-plugin'] + ' --pack-extension-key=./dist/chrome-plugin/key.pem');
+        cb();
     });
 };
