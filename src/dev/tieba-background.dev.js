@@ -1,13 +1,3 @@
-chrome.browserAction.onClicked.addListener(function () {
-    chrome.windows.create({
-        url: 'main.html',
-        width: 640,
-        height: 400,
-        focused: true,
-        type: 'popup'
-    });
-});
-
 chrome.webRequest.onBeforeSendHeaders.addListener(function (details) {
     console.debug('headers', details);
     var header = details.requestHeaders;

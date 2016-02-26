@@ -84,7 +84,7 @@ crashlytics-build.properties
 .metadata
 .gradle
 bin/
-/dist/app
+/dist/native
 tmp/
 *.tmp
 *.bak

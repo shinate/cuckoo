@@ -1,11 +1,10 @@
 'use strict';
 
 var fs = require('fs');
-var JC = require('json-config-reader');
 
 module.exports = function (gulp, PLUGIN, CONF) {
     gulp.task('up-version', function (cb) {
-        var version = JC.read('package.json').version;
+        var version = CONF.version;
 
         [
             CONF.src + '/manifest.json',

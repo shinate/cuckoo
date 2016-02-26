@@ -29,8 +29,7 @@ module.exports = function (gulp, PLUGIN, CONF) {
 
     gulp.task('js-background', function () {
         return gulp.src([CONF.src + '/js/background/*.js'])
-            .pipe(concat('background.js'))
             .pipe(uglify())
-            .pipe(gulp.dest(CONF.build + '/js'));
+            .pipe(gulp.dest(CONF.build + '/js/background/'));
     });
 };
