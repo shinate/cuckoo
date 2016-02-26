@@ -5,7 +5,7 @@
   "icons": {
     "128": "style/images/icon_128.png"
   },
-  "homepage_url": "http://eux.baidu.com/works",
+  "homepage_url": "http://codante.org",
   "background": {
     "scripts": [
       "js/background/chrome.js"

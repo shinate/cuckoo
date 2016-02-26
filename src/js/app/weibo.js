@@ -1,7 +1,6 @@
 (function (global) {
 
-    var name = 'app_weibo';
-    var display_name = '围脖';
+    var name = 'weibo';
     var UP_URL = "http://picupload.service.weibo.com/interface/pic_upload.php?&mime=image%2Fjpeg&data=base64&url=0&markpos=1&logo=&nick=0&marks=1&app=miniblog";
 
     function pid2url(pid, type) {
@@ -46,7 +45,10 @@
                     onComplete(pid2url(rs.data.pics.pic_1.pid, 'large'));
                 } else {
                     onComplete(null);
-                    Channel.fire('tips', 'show', ['上传失败, 请先<a href="http://weibo.com/" target="_blank">登录</a>围脖', 5000]);
+                    Channel.fire('tips', 'show', [
+                        '上传失败, 请先<a href="http://weibo.com/" target="_blank">登录</a>围脖',
+                        5000
+                    ]);
                 }
             }
         };
@@ -56,10 +58,9 @@
 
     Channel.register(name, 'upload', upload);
 
-    global[name] = {
+        global.__CONFIG__[name] = {
         upload: upload,
-        name: name,
-        display_name: display_name
+        name: name
     };
 
 })(this || window);

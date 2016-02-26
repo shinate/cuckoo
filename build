@@ -1,3 +1,2 @@
 #!/usr/bin/env bash
-gulp clean
-gulp
+gulp clean && gulp

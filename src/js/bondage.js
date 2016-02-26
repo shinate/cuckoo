@@ -15,8 +15,7 @@
     Channel.bind(['uploader', 'saveToHistory'], ['historyManager', 'add']);
 
     // TODO support more apps
-    var ACTIVE_APP = global['app_weibo'];
-    Channel.bind(['uploader', 'uploadTo'], [ACTIVE_APP.name, 'upload']);
-    document.title = ACTIVE_APP.display_name + ' 真是个好图床';
+    Channel.bind(['uploader', 'uploadTo'], [global.__CONFIG__[global.__CONFIG__.defaultAPP].name, 'upload']);
+    // document.title = ACTIVE_APP.display_name + ' 真是个好图床';
 
 })(this || window);

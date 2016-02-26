@@ -3,7 +3,8 @@
     var name = 'config';
     var config;
     var defaults = {
-        upload_timeout: 30000
+        upload_timeout: 30000,
+        defaultAPP: 'weibo'
     };
 
     function set(key, value) {
