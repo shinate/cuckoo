@@ -2,6 +2,8 @@
 
     var name = 'clipboard';
 
+    var _ = global.$L;
+
     function copyTextToClipboard(text) {
 
         var el = document.createElement('textarea');
@@ -14,9 +16,9 @@
 
         try {
             var successful = document.execCommand('copy');
-            Channel.fire('tips', 'show', successful ? '成功复制到剪切板' : '复制失败, 请手动进行');
+            Channel.fire('tips', 'show', successful ? _('Copy to clipboard success') : _('Copy failed, please manually'));
         } catch (err) {
-            Channel.fire('tips', 'show', '无法复制, 请手动进行');
+            Channel.fire('tips', 'show', _('Copy failed, please manually'));
         }
 
         document.body.removeChild(el);

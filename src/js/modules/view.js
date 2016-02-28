@@ -6,6 +6,7 @@
     var lock = {};
     var cache = {};
     var LSN = {};
+    var _ = global.i18n;
 
     var closeBtn = '' +
         '<nav action-type="closeBtn" class="closeBtn">' +
@@ -19,6 +20,55 @@
     };
 
     it.parseDOM = function () {
+
+
+        $('#bar').html([
+            '<li>',
+            '<button title="' + _('Upload') + '" node-type="uploadBtn" action-type="uploadBtn" class="fa fa-cloud-upload"></button>',
+            '</li>',
+            '<li>',
+            '<button title="' + _('Copy all links') + '" node-type="copyBtn" action-type="copyBtn" class="fa fa-copy"></button>',
+            '</li>',
+            '<li>',
+            '<button title="' + _('Edit links') + '" node-type="urlsTextBtn" action-type="urlsTextBtn" class="fa fa-clipboard"></button>',
+            '</li>',
+            '<li>',
+            '<button title="' + _('History') + '" node-type="historyBtn" action-type="historyBtn" class="fa fa-history"></button>',
+            '</li>',
+            '<li>',
+            '<button title="' + _('Clear') + '" node-type="trashBtn" action-type="trashBtn" class="fa fa-trash"></button>',
+            '</li>'
+        ].join(''));
+
+        $('#platform').html([
+            '<li node-type="upload">',
+            '<div node-type="uploadDrop">',
+            '<div class="drop-pictures-here">',
+            '<i class="fa fa-picture-o"></i>',
+            '<i class="fa fa-folder-open-o"></i>',
+            '<b>' + _('Drop pictures here OR click to open a file picker') + '</b>',
+            '</div>',
+            '<input node-type="uploadBox" type="file" multiple="true">',
+            '</div>',
+            '</li>',
+            '<li node-type="urlsText">',
+            '<div>',
+            '<nav class="toolbar">',
+            '<button action-type="copy" class="fl fa fa-copy" title="' + _('Copy to clipboard') + '"></button>',
+            '<button action-type="markdown" class="fl" title="' + _('Conversion to Markdown') + '">![Markdown</button>',
+            '<button action-type="image" class="fl" title="' + _('Conversion to HTML') + '">&lt;IMG</button>',
+            '<button action-type="ubb" class="fl" title="' + _('Conversion to UBB') + '">[UBB]</button>',
+            '<button action-type="undo" class="fr fa fa-undo" title="' + _('Restore') + '"></button>',
+            '</nav>',
+            '<textarea action-type="selectAll" readonly node-type="urlsTextBox"></textarea>',
+            '</div>',
+            '</li>',
+            '<li node-type="history">',
+            '<ul node-type="historyBox"></ul>',
+            '</li>'
+        ].join(''));
+
+
         nodes = $('#bar, #platform').parseDOM();
         nodes.body = $(document.body);
         nodes.bar = $('#bar');
@@ -277,7 +327,7 @@
                 }).join('\n'));
                 it.switchPlatform('history');
             } else {
-                Channel.fire('tips', 'show', '没有上传记录');
+                Channel.fire('tips', 'show', _('No history'));
             }
         });
         //var history = historyManager.load();
