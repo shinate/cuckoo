@@ -1,4 +1,4 @@
-(function (global) {
+(function (global, $) {
 
     var name = 'config';
     var config;
@@ -23,4 +23,4 @@
     var config = $.extend({}, global.__CONFIG__, JSON.parse(global.localStorage.getItem(name)));
     global.__CONFIG__ = config;
 
-})(this || window);
+})(this || window, Zepto);

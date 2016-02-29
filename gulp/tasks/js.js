@@ -17,7 +17,13 @@ module.exports = function (gulp, PLUGIN, CONF) {
 
     gulp.task('js-core', function () {
         return gulp.src([
-            CONF.src + '/js/core/*.js'
+            CONF.src + '/js/core/zepto.js',
+            CONF.src + '/js/core/zepto.parseDOM.js',
+            CONF.src + '/js/core/queue.js',
+            CONF.src + '/js/core/Channel.js',
+            CONF.src + '/js/core/Date.js',
+            CONF.src + '/js/core/config.js',
+            CONF.src + '/js/core/i18n.js'
         ])
             .pipe(concat('core.js'))
             .pipe(uglify())
