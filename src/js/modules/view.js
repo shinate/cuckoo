@@ -21,23 +21,13 @@
 
     it.parseDOM = function () {
 
-
         $('#bar').html([
-            '<li>',
-            '<button title="' + _('Upload') + '" node-type="uploadBtn" action-type="uploadBtn" class="fa fa-cloud-upload"></button>',
-            '</li>',
-            '<li>',
-            '<button title="' + _('Copy all links') + '" node-type="copyBtn" action-type="copyBtn" class="fa fa-copy"></button>',
-            '</li>',
-            '<li>',
-            '<button title="' + _('Edit links') + '" node-type="urlsTextBtn" action-type="urlsTextBtn" class="fa fa-clipboard"></button>',
-            '</li>',
-            '<li>',
-            '<button title="' + _('History') + '" node-type="historyBtn" action-type="historyBtn" class="fa fa-history"></button>',
-            '</li>',
-            '<li>',
-            '<button title="' + _('Clear') + '" node-type="trashBtn" action-type="trashBtn" class="fa fa-trash"></button>',
-            '</li>'
+            '<li><button title="' + _('Upload') + '" node-type="uploadBtn" action-type="uploadBtn" class="fa fa-cloud-upload"></button></li>',
+            '<li><button title="' + _('Copy all links') + '" node-type="copyBtn" action-type="copyBtn" class="fa fa-copy"></button></li>',
+            '<li><button title="' + _('Edit links') + '" node-type="urlsTextBtn" action-type="urlsTextBtn" class="fa fa-clipboard"></button></li>',
+            '<li><button title="' + _('History') + '" node-type="historyBtn" action-type="historyBtn" class="fa fa-history"></button></li>',
+            '<li><button title="' + _('Clear') + '" node-type="trashBtn" action-type="trashBtn" class="fa fa-trash"></button></li>',
+            '<li><button title="' + _('Settings') + '" node-type="settingBtn" action-type="settingBtn" class="fa fa-cog"></button></li>'
         ].join(''));
 
         $('#platform').html([
@@ -48,7 +38,7 @@
             '<i class="fa fa-folder-open-o"></i>',
             '<b>' + _('Drop pictures here OR click to open a file picker') + '</b>',
             '</div>',
-            '<input node-type="uploadBox" type="file" multiple="true">',
+            '<input node-type="uploadBox" type="file" multiple="true" title="' + _('Drop pictures here OR click to open a file picker') + '">',
             '</div>',
             '</li>',
             '<li node-type="urlsText">',
@@ -101,7 +91,7 @@
         evts = it.evts.upload;
         for (var type in evts) {
             if (evts.hasOwnProperty(type)) {
-                nodes.uploadDrop.on(type, evts[type]);
+                nodes.uploadBox.on(type, evts[type]);
             }
         }
 
@@ -109,6 +99,13 @@
         for (var type in evts) {
             if (evts.hasOwnProperty(type)) {
                 nodes.uploadBox.on(type, evts[type]);
+            }
+        }
+
+        evts = it.evts.bodyBlock;
+        for (var type in evts) {
+            if (evts.hasOwnProperty(type)) {
+                nodes.body.on(type, evts[type]);
             }
         }
 
@@ -161,9 +158,12 @@
                 return false;
             }
         },
-        upload: {
+        bodyBlock: {
             dragenter: function (e) {
                 e.preventDefault();
+                if (!nodes.upload.hasClass('show')) {
+                    it.switchPlatform('upload');
+                }
                 return false;
             },
             dragover: function (e) {
@@ -176,6 +176,27 @@
             },
             drop: function (e) {
                 e.preventDefault();
+                return false;
+            }
+        },
+        upload: {
+            dragenter: function (e) {
+                e.preventDefault();
+                nodes.uploadDrop.addClass('active');
+                return false;
+            },
+            dragover: function (e) {
+                e.preventDefault();
+                return false;
+            },
+            dragleave: function (e) {
+                e.preventDefault();
+                nodes.uploadDrop.removeClass('active');
+                return false;
+            },
+            drop: function (e) {
+                e.preventDefault();
+                nodes.uploadDrop.removeClass('active');
                 Channel.fire(name, 'dropedFiles', e.dataTransfer.files);
                 return false;
             }

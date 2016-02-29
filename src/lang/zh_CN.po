@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: cuckoo\n"
-"POT-Creation-Date: 2016-02-28 09:42+0800\n"
-"PO-Revision-Date: 2016-02-28 09:42+0800\n"
+"POT-Creation-Date: 2016-02-29 16:49+0800\n"
+"PO-Revision-Date: 2016-02-29 20:31+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: zh_CN\n"
@@ -24,6 +24,33 @@ msgstr "成功复制到剪切板"
 #: modules/clipboard.js:19 modules/clipboard.js:21
 msgid "Copy failed, please manually"
 msgstr "复制失败，请手动进行"
+
+#: modules/uploader.js:97
+msgid "No picture detected"
+msgstr "没有检测到任何图片文件"
+
+#: modules/uploader.js:99
+#, javascript-format
+msgid "Start uploading %d pictures"
+msgstr "开始上传 %d 张图片"
+
+#: modules/uploader.js:101
+#, javascript-format
+msgid "Start uploading %d pictures, Ignore %d invalid file"
+msgstr "开始上传 %d 张图片，忽略 %d 无效文件"
+
+#: modules/uploader.js:131
+#, javascript-format
+msgid "Upload successful(%d/%d)"
+msgstr "上传成功(%d/%d)"
+
+#: modules/uploader.js:195 modules/view.js:57
+msgid "Copy to clipboard"
+msgstr "复制到剪切板"
+
+#: modules/uploader.js:196
+msgid "Retry"
+msgstr "重试"
 
 #: modules/view.js:27
 msgid "Upload"
@@ -48,10 +75,6 @@ msgstr "清空"
 #: modules/view.js:49
 msgid "Drop pictures here OR click to open a file picker"
 msgstr "将图片拖至此处，或单击以打开文件选择器"
-
-#: modules/view.js:57
-msgid "Copy to clipboard"
-msgstr "复制到剪切板"
 
 #: modules/view.js:58
 msgid "Conversion to Markdown"

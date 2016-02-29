@@ -6,24 +6,25 @@ body {
   background-color: #333333;
   background: url(../images/background.png) no-repeat fixed 50% 100%;
   background-size: cover;
+  overflow: hidden;
 }
 
 #bar {
   position: fixed;
   z-index: 2;
-  background-color: #000000;
+  background-color: @const-black;
 
   body.right & {
     top: 0;
     right: 0;
     height: 100%;
-    width: @const-bar-width;
+    width: @const-bar-size;
   }
 
   li {
-    width: @const-bar-width;
-    height: @const-bar-width;
-    border-bottom: 1px solid #000000;
+    width: @const-bar-size;
+    height: @const-bar-size;
+    border-bottom: 1px solid @const-black;
 
     button {
       border: 0 none;
@@ -32,7 +33,7 @@ body {
       width: 100%;
       height: 100%;
       text-align: center;
-      line-height: @const-bar-width;
+      line-height: @const-bar-size;
       font-size: 24px;
       color: @const-color-link-normal;
       cursor: pointer;
@@ -64,8 +65,8 @@ body {
     left: 100%;
 
     > li {
-      padding-right: 32px + @const-bar-width;
-      padding-left: 16px + @const-bar-width;
+      padding-right: 32px + @const-bar-size;
+      padding-left: 16px + @const-bar-size;
 
       &.show {
         transform: translateX(-100%);
@@ -98,7 +99,7 @@ body {
       right: 100%;
       top: 50%;
       margin-top: -80px;
-      margin-right: -16px - @const-bar-width;
+      margin-right: -16px - @const-bar-size;
       height: 160px;
       width: 48px;
 
@@ -167,6 +168,15 @@ body {
       border: 5px dashed #999999;
       box-sizing: border-box;
       overflow: hidden;
+      -webkit-transition: background-color .2s;
+      -moz-transition: background-color .2s;
+      -ms-transition: background-color .2s;
+      -o-transition: background-color .2s;
+      transition: background-color .2s;
+
+      &.active {
+        background-color: fadeout(#1e563c, 10%);
+      }
 
       > input {
         position: relative;
@@ -255,7 +265,7 @@ body {
       width: 100%;
       height: 100%;
       overflow: auto;
-      background-color: fadeout(#000000, 5%);
+      background-color: fadeout(@const-black, 5%);
 
       > li {
         //background-color: fadeout(#999999, 5%);
@@ -305,12 +315,19 @@ body {
 }
 
 .list {
-  position: relative;
+  position: absolute;
   z-index: 0;
   padding: 16px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+  overflow-x: hidden;
+  //-webkit-overflow-scrolling: touch;
 
   body.right & {
-    padding-right: 16px + @const-bar-width;
+    right: @const-bar-size
   }
 
   .preview {
@@ -342,8 +359,6 @@ body {
       position: absolute;
       height: 32px;
       width: 32px;
-      right: 0;
-      bottom: 0;
       border: 0 none;
       border-radius: 5px;
     }
@@ -360,6 +375,8 @@ body {
       > button.retry {
         display: block;
         background: @const-color-preview-uploaderr;
+        right: 0;
+        bottom: 0;
       }
     }
 
@@ -369,6 +386,8 @@ body {
       > button.copy {
         display: block;
         background: @const-color-preview-uploaded;
+        right: 0;
+        bottom: 0;
       }
     }
   }

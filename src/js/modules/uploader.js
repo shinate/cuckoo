@@ -11,6 +11,8 @@
     var previewList = [];
     var taskManager = {};
     var config = global.__CONFIG__;
+    var _ = global.i18n;
+    var sprintf = global.sprintf;
 
     var ALLOWED_TYPE = ['image/png', 'image/jpeg', 'image/gif', 'image/bmp'];
 
@@ -92,11 +94,11 @@
         }
 
         if (files.length === 0)
-            Channel.fire('tips', 'show', '没有检测到图片');
+            Channel.fire('tips', 'show', _('No picture detected'));
         else if (files.length === sl)
-            Channel.fire('tips', 'show', '开始上传' + files.length + '个图片');
+            Channel.fire('tips', 'show', sprintf(_('Start uploading %d pictures'), files.length));
         else
-            Channel.fire('tips', 'show', '开始上传' + files.length + '个图片, 忽略' + (sl - files.length) + '个无效文件');
+            Channel.fire('tips', 'show', sprintf(_('Start uploading %d pictures, Ignore %d invalid file'), files.length, sl - files.length));
     };
 
     it.createUploadQueue = function (images) {
@@ -126,11 +128,12 @@
             Channel.fire(name, 'uploadComplete', [allUrls]);
 
             if (reject.length === 0) {
-                Channel.fire('tips', 'show', '上传成功(' + reslove.length + '/' + s.length + ')');
+                Channel.fire('tips', 'show', sprintf(_('Upload successful(%d/%d)'), reslove.length, s.length));
                 Channel.fire(name, 'uploadAllSuccess', [allUrls]);
             } else {
                 // Channel.fire('tips', 'show', '上传成功(' + reslove.length + '/' + s.length + '), ' + '失败(' + reject.length + ')');
             }
+
             if (newPics.length) {
                 Channel.fire(name, 'saveToHistory', [
                     newPics.map(function (item) {
@@ -189,8 +192,9 @@
         var preview = $('' +
             '<li class="preview">' +
             '<div data-image="' + dp + '" class="picture" style="background-image:url(' + dp + ')"></div>' +
-            '<button title="复制到剪切板" action-type="copy" class="copy fa fa-copy"></button>' +
-            '<button title="重试" action-type="retry" class="retry fa fa-cloud-upload"></button>' +
+                //'<button title="' + _('Retry') + '" action-type="b64" class="b64"></button>' +
+            '<button title="' + _('Copy to clipboard') + '" action-type="copy" class="copy fa fa-copy"></button>' +
+            '<button title="' + _('Retry') + '" action-type="retry" class="retry fa fa-cloud-upload"></button>' +
             '</li>');
         nodes.list.append(preview);
         previewList.push(preview);

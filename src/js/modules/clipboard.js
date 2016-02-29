@@ -2,7 +2,7 @@
 
     var name = 'clipboard';
 
-    var _ = global.$L;
+    var _ = global.i18n;
 
     function copyTextToClipboard(text) {
 
