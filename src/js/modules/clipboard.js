@@ -26,9 +26,4 @@
 
     Channel.register(name, 'copy', copyTextToClipboard);
 
-    global[name] = {
-        name: name,
-        copy: copyTextToClipboard
-    };
-
 })(this || window);

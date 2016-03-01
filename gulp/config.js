@@ -2,17 +2,19 @@
 
 var conf = require('json-config-reader').read('package.json');
 
-module.exports = {
-    'src': './src',
-    'chromePluginPath': './dist/chrome-plugin',
-    'chromePlugin': './dist/chrome-plugin/' + conf.name,
-    'safariPluginPath': './dist/safari-plugin',
-    'safariPlugin': './dist/safari-plugin/' + conf.name,
-    'nativePath': './dist/native',
-    'native': './dist/native/' + conf.name,
-    'bower': './bower_components',
-    'icons': './icons',
-    'build': './tmp',
-    'version': conf.version,
-    'name': conf.name
-};
+conf.src = './src';
+conf.dist = './dist';
+conf.bower = './bower_components';
+conf.icons = './icons';
+conf.build = './tmp';
+
+conf.chromePluginPath = conf.dist + '/chrome-plugin';
+conf.chromePlugin = conf.chromePluginPath + '/' + conf.name;
+
+conf.safariPluginPath = conf.dist + '/safari-plugin';
+conf.safariPlugin = conf.safariPluginPath + '/' + conf.name;
+
+conf.nativePath = conf.dist + '/native';
+conf.native = conf.nativePath + '/' + conf.name;
+
+module.exports = conf;

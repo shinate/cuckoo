@@ -5,7 +5,7 @@ module.exports = function (gulp, PLUGIN, CONF) {
     var concat = PLUGIN.concat;
     var uglify = PLUGIN.uglify;
 
-    gulp.task('js', ['js-config', 'js-core', 'js-lang', 'js-main', 'js-background']);
+    gulp.task('js', ['i18n', 'js-config', 'js-core', 'js-lang', 'js-main', 'js-background']);
 
     gulp.task('js-config', function () {
         return gulp.src([

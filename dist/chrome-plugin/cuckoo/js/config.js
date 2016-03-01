@@ -1,0 +1,1 @@
+!function(_){_.__CONFIG__={upload_timeout:3e4,defaultAPP:"weibo",language:"zh_TW"}}(this||window);

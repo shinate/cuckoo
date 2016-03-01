@@ -19,6 +19,7 @@
     "gulp-streamify": "^1.0.2",
     "gulp-uglify": "^1.5.1",
     "json-config-reader": "^2.0.1",
+    "queue-async": "^1.2.1",
     "require-dir": "^0.3.0",
     "sync-exec": "^0.6.2",
     "through-gulp": "^0.3.8",
@@ -28,6 +29,9 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "scripts": {
+    "native": "electron ./src",
+    "build": "gulp",
+    "lang": "gulp i18n",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

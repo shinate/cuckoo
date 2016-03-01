@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: cuckoo\n"
-"POT-Creation-Date: 2016-02-29 16:49+0800\n"
-"PO-Revision-Date: 2016-02-29 20:31+0800\n"
+"POT-Creation-Date: 2016-03-01 15:16+0800\n"
+"PO-Revision-Date: 2016-03-01 15:16+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: zh_CN\n"
@@ -44,57 +44,64 @@ msgstr "开始上传 %d 张图片，忽略 %d 无效文件"
 msgid "Upload successful(%d/%d)"
 msgstr "上传成功(%d/%d)"
 
-#: modules/uploader.js:195 modules/view.js:57
+#: modules/uploader.js:196 modules/view.js:47
 msgid "Copy to clipboard"
 msgstr "复制到剪切板"
 
-#: modules/uploader.js:196
+#: modules/uploader.js:197
 msgid "Retry"
 msgstr "重试"
 
-#: modules/view.js:27
+#: modules/view.js:25
 msgid "Upload"
 msgstr "上传"
 
-#: modules/view.js:30
+#: modules/view.js:26
 msgid "Copy all links"
 msgstr "复制所有链接"
 
-#: modules/view.js:33
+#: modules/view.js:27
 msgid "Edit links"
 msgstr "编辑现有链接"
 
-#: modules/view.js:36
+#: modules/view.js:28
 msgid "History"
 msgstr "历史"
 
-#: modules/view.js:39
+#: modules/view.js:29
 msgid "Clear"
 msgstr "清空"
 
-#: modules/view.js:49
+#: modules/view.js:30
+msgid "Settings"
+msgstr "设置"
+
+#: modules/view.js:39 modules/view.js:41
 msgid "Drop pictures here OR click to open a file picker"
 msgstr "将图片拖至此处，或单击以打开文件选择器"
 
-#: modules/view.js:58
+#: modules/view.js:48
 msgid "Conversion to Markdown"
 msgstr "转换为Markdown格式"
 
-#: modules/view.js:59
+#: modules/view.js:49
 msgid "Conversion to HTML"
 msgstr "转换为HTML格式"
 
-#: modules/view.js:60
+#: modules/view.js:50
 msgid "Conversion to UBB"
 msgstr "转换为UBB格式"
 
-#: modules/view.js:61
+#: modules/view.js:51
 msgid "Restore"
 msgstr "还原"
 
-#: modules/view.js:330
+#: modules/view.js:357
 msgid "No history"
 msgstr "没有历史上传"
+
+#~ msgid "FUCK"
+#~ msgstr "擦"
 
 #~ msgid "Parse to Markdown"
 #~ msgstr "转换为Markdown格式"

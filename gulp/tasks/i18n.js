@@ -7,7 +7,7 @@ var path = require('path');
 module.exports = function (gulp, PLUGIN, CONF) {
     gulp.task('i18n', function () {
         return gulp.src([
-            CONF.src + '/lang/*.po'
+            './language/*.po'
         ])
             .pipe((function () {
 

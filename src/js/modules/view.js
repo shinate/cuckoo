@@ -156,6 +156,12 @@
                     Channel.fire(name, 'reset');
                 }
                 return false;
+            },
+            settingBtn: function (e) {
+                e.preventDefault();
+                global.location.reload();
+                it.switchPlatform('settings');
+                return false;
             }
         },
         bodyBlock: {
