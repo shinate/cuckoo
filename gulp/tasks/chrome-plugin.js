@@ -18,7 +18,7 @@ module.exports = function (gulp, PLUGIN, CONF) {
 
         if (fs.existsSync(CONF.chromePluginPath + '/' + CONF.name + '.pem')) {
             exec(CONF.chromeApp + ' --pack-extension=' + CONF.chromePlugin + ' --pack-extension-key=' + CONF.chromePluginPath + '/' + CONF.name + '.pem');
-            // exec('rm -rf ' + CONF.chromePlugin);
+            exec('rm -rf ' + CONF.chromePlugin);
         } else {
             console.log('Key file does not exist, can not release.');
         }
