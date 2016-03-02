@@ -1,6 +1,6 @@
 {
   "name": "cuckoo",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Free, powerful tool for image cloud",
   "icons": {
     "128": "style/images/icon_128.png"

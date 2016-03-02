@@ -1,6 +1,6 @@
 {
   "name": "cuckoo",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Get pictures of the network address",
   "devDependencies": {
     "electron-packager": "^5.2.1",

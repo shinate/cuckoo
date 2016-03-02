@@ -1907,7 +1907,24 @@
 
 	    it.parseDOM = function () {
 
-	        $('#bar').html([
+
+	        nodes = {};
+	        nodes.bar = $('#bar');
+	        nodes.platform = $('#platform');
+	        it.renderFrame();
+
+	        nodes.body = $(document.body);
+
+	        nodes.platform.children().prepend($(closeBtn));
+
+	        nodes.body.addClass('right');
+
+	        it.reset();
+	    };
+
+	    it.renderFrame = function () {
+
+	        nodes.bar.html([
 	            '<li><button title="' + _('Upload') + '" node-type="uploadBtn" action-type="uploadBtn" class="fa fa-cloud-upload"></button></li>',
 	            '<li><button title="' + _('Copy all links') + '" node-type="copyBtn" action-type="copyBtn" class="fa fa-copy"></button></li>',
 	            '<li><button title="' + _('Edit links') + '" node-type="urlsTextBtn" action-type="urlsTextBtn" class="fa fa-clipboard"></button></li>',
@@ -1916,7 +1933,7 @@
 	            '<li><button title="' + _('Settings') + '" node-type="settingBtn" action-type="settingBtn" class="fa fa-cog"></button></li>'
 	        ].join(''));
 
-	        $('#platform').html([
+	        nodes.platform.html([
 	            '<li node-type="upload">',
 	            '<div node-type="uploadDrop">',
 	            '<div class="drop-pictures-here">',
@@ -1927,6 +1944,7 @@
 	            '<input node-type="uploadBox" type="file" multiple="true" title="' + _('Drop pictures here OR click to open a file picker') + '">',
 	            '</div>',
 	            '</li>',
+
 	            '<li node-type="urlsText">',
 	            '<div>',
 	            '<nav class="toolbar">',
@@ -1939,22 +1957,17 @@
 	            '<textarea action-type="selectAll" readonly node-type="urlsTextBox"></textarea>',
 	            '</div>',
 	            '</li>',
+
 	            '<li node-type="history">',
 	            '<ul node-type="historyBox"></ul>',
+	            '</li>',
+
+	            '<li node-type="settings">',
+	            '<ul node-type="settingsBox"></ul>',
 	            '</li>'
 	        ].join(''));
 
-
-	        nodes = $('#bar, #platform').parseDOM();
-	        nodes.body = $(document.body);
-	        nodes.bar = $('#bar');
-	        nodes.platform = $('#platform');
-
-	        nodes.platform.children().prepend($(closeBtn));
-
-	        nodes.body.addClass('right');
-
-	        it.reset();
+	        $.extend(nodes, nodes.bar.parseDOM(), nodes.platform.parseDOM());
 	    };
 
 	    it.bind = function () {
@@ -2045,8 +2058,7 @@
 	            },
 	            settingBtn: function (e) {
 	                e.preventDefault();
-	                global.location.reload();
-	                it.switchPlatform('settings');
+	                it.renderSettings();
 	                return false;
 	            }
 	        },
@@ -2243,23 +2255,50 @@
 	                Channel.fire('tips', 'show', _('No history'));
 	            }
 	        });
-	        //var history = historyManager.load();
-	        //if (history.length) {
-	        //    nodes.historyBox.html(history.reverse().map(function (item) {
-	        //        return '<li class="clearfix">' +
-	        //            '<div class="preview" style="background-image:url(' + item.src + ')"></div>' +
-	        //            '<div class="detail">' +
-	        //            '<div class="url">' +
-	        //            '<input action-type="selectAll" readonly value="' + item.src + '">' +
-	        //            '</div>' +
-	        //            (item.time ? '<p class="time">' + new Date(item.time).Format('yyyy-mm-dd h:i:s') + '</p>' : '') +
-	        //            '</div>' +
-	        //            '</li>';
-	        //    }).join('\n'));
-	        //    it.switchPlatform('history');
-	        //} else {
-	        //    Channel.fire('tips', 'show', '没有上传记录');
-	        //}
+	    };
+
+	    it.renderSettings = function () {
+	        Channel.fire(name, 'loadSettings', function (settings) {
+
+	            var TPL = [];
+
+	            var allowedLanguage = global.__ALLOWED_LANGUAGE__;
+	            if (allowedLanguage.indexOf('en') < 0) {
+	                allowedLanguage = ['en'].concat(allowedLanguage);
+	            }
+
+	            Object.keys(settings).forEach(function (option) {
+
+	                TPL.push('<li class="clearfix">');
+	                TPL.push('<label>' +
+	                    _(option) + ':' +
+	                    '</label>');
+	                if (option === 'language') {
+	                    TPL.push('<select name="language">');
+	                    allowedLanguage.forEach(function (lang) {
+	                        TPL.push('' +
+	                            '<option value="' + lang + '">' +
+	                            _(lang) +
+	                            '</option>'
+	                        );
+	                    });
+	                    TPL.push('</select>');
+	                } else {
+	                    TPL.push('<input');
+	                    switch (typeof settings.option) {
+	                        case 'string':
+	                            TPL.push(' type="text"');
+	                            break;
+	                    }
+	                    TPL.push(' value="' + settings[option] + '" />');
+	                }
+
+	                TPL.push('</li>');
+	            });
+
+	            nodes.settingsBox.html(TPL.join(''));
+	            it.switchPlatform('settings');
+	        });
 	    };
 
 	    it.reset = function () {
@@ -2322,12 +2361,12 @@
 
 	    var Channel = __webpack_require__(7);
 	    var _ = __webpack_require__(8);
+	    var config = __webpack_require__(6);
 
 	    var name = 'settings';
 
-
-	    function show() {
-
+	    function load(cb) {
+	        cb(config.get());
 	    }
 
 	    function get() {
@@ -2338,7 +2377,7 @@
 
 	    }
 
-	    Channel.register(name, 'show', show);
+	    Channel.register(name, 'load', load);
 
 	})(window);
 
@@ -2786,6 +2825,7 @@
 	Channel.bind(['view', 'copyAllToClipboard'], ['clipboard', 'copy']);
 	Channel.bind(['view', 'reset'], ['uploader', 'reset']);
 	Channel.bind(['view', 'loadHistory'], ['historyManager', 'load']);
+	Channel.bind(['view', 'loadSettings'], ['settings', 'load']);
 
 	Channel.bind(['uploader', 'uploadStart'], ['view', 'closePlat']);
 	Channel.bind(['uploader', 'uploadStart'], ['view', 'uploadLock']);
@@ -2799,7 +2839,6 @@
 	var APPS = {
 	    weibo: __webpack_require__(17)
 	};
-	console.log(APPS, APPS[config.get('defaultAPP')].name);
 	Channel.bind(['uploader', 'uploadTo'], [APPS[config.get('defaultAPP')].name, 'upload']);
 
 /***/ },
