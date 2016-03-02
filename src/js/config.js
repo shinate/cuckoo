@@ -4,7 +4,7 @@
     };
 
     _('upload_timeout');
-    _('defaultAPP');
+    _('default_storage');
     _('language');
 
     _('en');
@@ -13,7 +13,7 @@
 
     global.__CONFIG__ = {
         upload_timeout: 30000,
-        defaultAPP: 'weibo',
+        default_storage: 'weibo',
         language: 'en'
     };
 

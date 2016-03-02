@@ -17,9 +17,9 @@
 
         try {
             var successful = document.execCommand('copy');
-            Channel.fire('tips', 'show', successful ? _('Copy to clipboard success') : _('Copy failed, please manually'));
+            Channel.fire('tips', 'show', successful ? _('Copy to clipboard successfully') : _('Copy failed, please retry manually'));
         } catch (err) {
-            Channel.fire('tips', 'show', _('Copy failed, please manually'));
+            Channel.fire('tips', 'show', _('Copy failed, please retry manually'));
         }
 
         document.body.removeChild(el);

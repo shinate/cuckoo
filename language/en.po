@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: cuckoo\n"
-"POT-Creation-Date: 2016-03-02 14:02+0800\n"
-"PO-Revision-Date: 2016-03-02 14:22+0800\n"
+"POT-Creation-Date: 2016-03-02 16:20+0800\n"
+"PO-Revision-Date: 2016-03-02 16:21+0800\n"
 "Last-Translator: \n"
 "Language-Team: shine.wangrs@gmail.com\n"
 "Language: en\n"
@@ -22,8 +22,8 @@ msgid "upload_timeout"
 msgstr "Upload timeout"
 
 #: config.js:7
-msgid "defaultAPP"
-msgstr "Default storage"
+msgid "default_storage"
+msgstr "Default Storage"
 
 #: config.js:8
 msgid "language"
@@ -42,28 +42,31 @@ msgid "zh_TW"
 msgstr "Chinese (Traditional)"
 
 #: modules/clipboard.js:20
-msgid "Copy to clipboard success"
-msgstr "Copy to clipboard success"
+msgid "Copy to clipboard successfully"
+msgstr "Copy to clipboard successfully"
 
 #: modules/clipboard.js:20 modules/clipboard.js:22
-msgid "Copy failed, please manually"
-msgstr "Copy failed, please manually"
+msgid "Copy failed, please retry manually"
+msgstr "Copy failed, please retry manually"
 
 #: modules/uploader.js:103
 msgid "No picture detected"
 msgstr "No picture detected"
 
 #: modules/uploader.js:105
+#, javascript-format
 msgid "Start uploading %d pictures"
 msgstr "Start uploading %d pictures"
 
 #: modules/uploader.js:107
-msgid "Start uploading %d pictures, Ignore %d invalid file"
-msgstr "Start uploading %d pictures, Ignore %d invalid file"
+#, javascript-format
+msgid "Start uploading %d pictures, with %d invalid file ignored"
+msgstr "Start uploading %d pictures, with %d invalid file ignored"
 
 #: modules/uploader.js:137
-msgid "Upload successful(%d/%d)"
-msgstr "Upload successful(%d/%d)"
+#, javascript-format
+msgid "Upload successfully (%d/%d)"
+msgstr "Upload successfully (%d/%d)"
 
 #: modules/uploader.js:202 modules/view.js:67
 msgid "Copy to clipboard"
@@ -98,25 +101,59 @@ msgid "Settings"
 msgstr "Settings"
 
 #: modules/view.js:58 modules/view.js:60
-msgid "Drop pictures here OR click to open a file picker"
-msgstr "Drop pictures here OR click to open a file picker"
+msgid "Drop picture(s) here OR click to open a file picker"
+msgstr "Drop picture(s) here OR click to open a file picker"
 
 #: modules/view.js:68
-msgid "Conversion to Markdown"
-msgstr "Conversion to Markdown"
+msgid "Convert to Markdown"
+msgstr "Convert to Markdown"
 
 #: modules/view.js:69
-msgid "Conversion to HTML"
-msgstr "Conversion to HTML"
+msgid "Convert to HTML"
+msgstr "Convert to HTML"
 
 #: modules/view.js:70
-msgid "Conversion to UBB"
-msgstr "Conversion to UBB"
+msgid "Convert to UBB"
+msgstr "Convert to UBB"
 
 #: modules/view.js:71
 msgid "Restore"
 msgstr "Restore"
 
-#: modules/view.js:371
-msgid "No history"
-msgstr "No history"
+#: modules/view.js:376
+msgid "No history found"
+msgstr "No history found"
+
+#: modules/view.js:419
+msgid "SAVE"
+msgstr "SAVE"
+
+#~ msgid "defaultAPP"
+#~ msgstr "Default storage"
+
+#~ msgid "Copy to clipboard success"
+#~ msgstr "Copy to clipboard successfully"
+
+#~ msgid "Copy failed, please manually"
+#~ msgstr "Copy failed, please retry manually"
+
+#~ msgid "Start uploading %d pictures, Ignore %d invalid file"
+#~ msgstr "Start uploading %d pictures, with %d invalid file ignored"
+
+#~ msgid "Upload successful(%d/%d)"
+#~ msgstr "Upload successfully (%d/%d)"
+
+#~ msgid "Drop pictures here OR click to open a file picker"
+#~ msgstr "Drop picture(s) here OR click to open a file picker"
+
+#~ msgid "Conversion to Markdown"
+#~ msgstr "Convert to Markdown"
+
+#~ msgid "Conversion to HTML"
+#~ msgstr "Convert to HTML"
+
+#~ msgid "Conversion to UBB"
+#~ msgstr "Convert to UBB"
+
+#~ msgid "No history"
+#~ msgstr "No history found"

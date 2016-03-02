@@ -104,7 +104,7 @@
         else if (files.length === sl)
             Channel.fire('tips', 'show', sprintf(_('Start uploading %d pictures'), files.length));
         else
-            Channel.fire('tips', 'show', sprintf(_('Start uploading %d pictures, Ignore %d invalid file'), files.length, sl - files.length));
+            Channel.fire('tips', 'show', sprintf(_('Start uploading %d pictures, with %d invalid file ignored'), files.length, sl - files.length));
     };
 
     it.createUploadQueue = function (images) {
@@ -134,7 +134,7 @@
             Channel.fire(name, 'uploadComplete', [allUrls]);
 
             if (reject.length === 0) {
-                Channel.fire('tips', 'show', sprintf(_('Upload successful(%d/%d)'), reslove.length, s.length));
+                Channel.fire('tips', 'show', sprintf(_('Upload successfully (%d/%d)'), reslove.length, s.length));
                 Channel.fire(name, 'uploadAllSuccess', [allUrls]);
             } else {
                 // Channel.fire('tips', 'show', '上传成功(' + reslove.length + '/' + s.length + '), ' + '失败(' + reject.length + ')');

@@ -18,16 +18,23 @@
         return global.localStorage.removeItem(name);
     }
 
+    function update(c) {
+        config = $.extend({}, c);
+        global.localStorage.setItem(name, JSON.stringify(config));
+    }
+
     Channel.register(name, 'set', set);
     Channel.register(name, 'get', get);
     Channel.register(name, 'clear', clear);
+    Channel.register(name, 'update', update);
 
     global.__CONFIG__ = config;
 
     module.exports = {
         get: get,
         set: set,
-        clear: clear
+        clear: clear,
+        update: update
     }
 
 })(window, Zepto);

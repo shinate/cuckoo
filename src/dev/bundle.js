@@ -1671,9 +1671,8 @@
 	__webpack_require__(10);
 	__webpack_require__(11);
 	__webpack_require__(12);
-	__webpack_require__(13);
+	__webpack_require__(14);
 	__webpack_require__(15);
-	__webpack_require__(16);
 
 /***/ },
 /* 6 */
@@ -1699,16 +1698,23 @@
 	        return global.localStorage.removeItem(name);
 	    }
 
+	    function update(c) {
+	        config = $.extend({}, c);
+	        global.localStorage.setItem(name, JSON.stringify(config));
+	    }
+
 	    Channel.register(name, 'set', set);
 	    Channel.register(name, 'get', get);
 	    Channel.register(name, 'clear', clear);
+	    Channel.register(name, 'update', update);
 
 	    global.__CONFIG__ = config;
 
 	    module.exports = {
 	        get: get,
 	        set: set,
-	        clear: clear
+	        clear: clear,
+	        update: update
 	    }
 
 	})(window, Zepto);
@@ -1886,6 +1892,7 @@
 
 	    var Channel = __webpack_require__(7);
 	    var _ = __webpack_require__(8);
+	    var config = __webpack_require__(6);
 
 	    var name = 'view';
 	    var it = {};
@@ -1939,9 +1946,9 @@
 	            '<div class="drop-pictures-here">',
 	            '<i class="fa fa-picture-o"></i>',
 	            '<i class="fa fa-folder-open-o"></i>',
-	            '<b>' + _('Drop pictures here OR click to open a file picker') + '</b>',
+	            '<b>' + _('Drop picture(s) here OR click to open a file picker') + '</b>',
 	            '</div>',
-	            '<input node-type="uploadBox" type="file" multiple="true" title="' + _('Drop pictures here OR click to open a file picker') + '">',
+	            '<input node-type="uploadBox" type="file" multiple="true" title="' + _('Drop picture(s) here OR click to open a file picker') + '">',
 	            '</div>',
 	            '</li>',
 
@@ -1949,9 +1956,9 @@
 	            '<div>',
 	            '<nav class="toolbar">',
 	            '<button action-type="copy" class="fl fa fa-copy" title="' + _('Copy to clipboard') + '"></button>',
-	            '<button action-type="markdown" class="fl" title="' + _('Conversion to Markdown') + '">![Markdown</button>',
-	            '<button action-type="image" class="fl" title="' + _('Conversion to HTML') + '">&lt;IMG</button>',
-	            '<button action-type="ubb" class="fl" title="' + _('Conversion to UBB') + '">[UBB]</button>',
+	            '<button action-type="markdown" class="fl" title="' + _('Convert to Markdown') + '">![Markdown</button>',
+	            '<button action-type="image" class="fl" title="' + _('Convert to HTML') + '">&lt;IMG</button>',
+	            '<button action-type="ubb" class="fl" title="' + _('Convert to UBB') + '">[UBB]</button>',
 	            '<button action-type="undo" class="fr fa fa-undo" title="' + _('Restore') + '"></button>',
 	            '</nav>',
 	            '<textarea action-type="selectAll" readonly node-type="urlsTextBox"></textarea>',
@@ -2151,6 +2158,11 @@
 	                e.preventDefault();
 	                $(this).get(0).select();
 	                return false;
+	            },
+	            saveSettings: function (e) {
+	                e.preventDefault();
+	                it.saveSettings();
+	                return false;
 	            }
 	        }
 	    };
@@ -2252,53 +2264,75 @@
 	                }).join('\n'));
 	                it.switchPlatform('history');
 	            } else {
-	                Channel.fire('tips', 'show', _('No history'));
+	                Channel.fire('tips', 'show', _('No history found'));
 	            }
 	        });
 	    };
 
 	    it.renderSettings = function () {
-	        Channel.fire(name, 'loadSettings', function (settings) {
 
-	            var TPL = [];
+	        var settings = config.get();
 
-	            var allowedLanguage = global.__ALLOWED_LANGUAGE__;
-	            if (allowedLanguage.indexOf('en') < 0) {
-	                allowedLanguage = ['en'].concat(allowedLanguage);
+	        var TPL = [];
+
+	        var allowedLanguage = global.__ALLOWED_LANGUAGE__;
+	        if (allowedLanguage.indexOf('en') < 0) {
+	            allowedLanguage = ['en'].concat(allowedLanguage);
+	        }
+
+	        Object.keys(settings).forEach(function (option) {
+
+	            TPL.push('<li class="clearfix">');
+	            TPL.push('<label>' + _(option) + ':</label>');
+	            if (option === 'language') {
+	                TPL.push('<select name="language">');
+	                allowedLanguage.forEach(function (lang) {
+	                    TPL.push('' +
+	                        '<option value="' + lang + '"' + (settings.language === lang ? ' selected="selected"' : '') + '>' +
+	                        _(lang) +
+	                        '</option>'
+	                    );
+	                });
+	                TPL.push('</select>');
+	            } else {
+	                TPL.push('<input name="' + option + '"');
+	                switch (typeof settings.option) {
+	                    case 'string':
+	                        TPL.push(' type="text"');
+	                        break;
+	                    case 'number':
+	                        TPL.push(' type="number"');
+	                        break;
+	                }
+	                TPL.push(' value="' + settings[option] + '" />');
 	            }
 
-	            Object.keys(settings).forEach(function (option) {
-
-	                TPL.push('<li class="clearfix">');
-	                TPL.push('<label>' +
-	                    _(option) + ':' +
-	                    '</label>');
-	                if (option === 'language') {
-	                    TPL.push('<select name="language">');
-	                    allowedLanguage.forEach(function (lang) {
-	                        TPL.push('' +
-	                            '<option value="' + lang + '">' +
-	                            _(lang) +
-	                            '</option>'
-	                        );
-	                    });
-	                    TPL.push('</select>');
-	                } else {
-	                    TPL.push('<input');
-	                    switch (typeof settings.option) {
-	                        case 'string':
-	                            TPL.push(' type="text"');
-	                            break;
-	                    }
-	                    TPL.push(' value="' + settings[option] + '" />');
-	                }
-
-	                TPL.push('</li>');
-	            });
-
-	            nodes.settingsBox.html(TPL.join(''));
-	            it.switchPlatform('settings');
+	            TPL.push('</li>');
 	        });
+
+	        TPL.push('<li><label>&nbsp;</label><button node-type="saveSettings" action-type="saveSettings">' + _('SAVE') + '</button></li>');
+
+	        nodes.settingsBox.html(TPL.join(''));
+	        it.switchPlatform('settings');
+	    };
+
+	    it.saveSettings = function () {
+	        var cfg = {};
+	        var name, value, type, el;
+	        nodes.settingsBox.find('[name]').each(function () {
+	            el = $(this);
+	            name = el.attr('name');
+	            type = el.attr('type');
+	            value = el.val();
+	            if (type === 'number') {
+	                value = value.indexOf('.') > -1 ? parseFloat(value) : parseInt(value);
+	            }
+	            cfg[name] = value;
+	        });
+	        config.update(cfg);
+	        setTimeout(function () {
+	            window.location.reload();
+	        }, 0);
 	    };
 
 	    it.reset = function () {
@@ -2357,34 +2391,6 @@
 /* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
-	(function (global) {
-
-	    var Channel = __webpack_require__(7);
-	    var _ = __webpack_require__(8);
-	    var config = __webpack_require__(6);
-
-	    var name = 'settings';
-
-	    function load(cb) {
-	        cb(config.get());
-	    }
-
-	    function get() {
-
-	    }
-
-	    function save() {
-
-	    }
-
-	    Channel.register(name, 'load', load);
-
-	})(window);
-
-/***/ },
-/* 12 */
-/***/ function(module, exports, __webpack_require__) {
-
 	(function (global, $) {
 
 	    var Channel = __webpack_require__(7);
@@ -2426,7 +2432,7 @@
 	})(window, Zepto);
 
 /***/ },
-/* 13 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2439,7 +2445,7 @@
 	    var Channel = __webpack_require__(7);
 	    var config = __webpack_require__(6);
 	    var sprintf = __webpack_require__(2).sprintf;
-	    var queue = __webpack_require__(14);
+	    var queue = __webpack_require__(13);
 	    var _ = __webpack_require__(8);
 
 	    var name = 'uploader';
@@ -2535,7 +2541,7 @@
 	        else if (files.length === sl)
 	            Channel.fire('tips', 'show', sprintf(_('Start uploading %d pictures'), files.length));
 	        else
-	            Channel.fire('tips', 'show', sprintf(_('Start uploading %d pictures, Ignore %d invalid file'), files.length, sl - files.length));
+	            Channel.fire('tips', 'show', sprintf(_('Start uploading %d pictures, with %d invalid file ignored'), files.length, sl - files.length));
 	    };
 
 	    it.createUploadQueue = function (images) {
@@ -2565,7 +2571,7 @@
 	            Channel.fire(name, 'uploadComplete', [allUrls]);
 
 	            if (reject.length === 0) {
-	                Channel.fire('tips', 'show', sprintf(_('Upload successful(%d/%d)'), reslove.length, s.length));
+	                Channel.fire('tips', 'show', sprintf(_('Upload successfully (%d/%d)'), reslove.length, s.length));
 	                Channel.fire(name, 'uploadAllSuccess', [allUrls]);
 	            } else {
 	                // Channel.fire('tips', 'show', '上传成功(' + reslove.length + '/' + s.length + '), ' + '失败(' + reject.length + ')');
@@ -2693,7 +2699,7 @@
 	})(Zepto, window);
 
 /***/ },
-/* 14 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;(function() {
@@ -2779,7 +2785,7 @@
 
 
 /***/ },
-/* 15 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global) {
@@ -2801,9 +2807,9 @@
 
 	        try {
 	            var successful = document.execCommand('copy');
-	            Channel.fire('tips', 'show', successful ? _('Copy to clipboard success') : _('Copy failed, please manually'));
+	            Channel.fire('tips', 'show', successful ? _('Copy to clipboard successfully') : _('Copy failed, please retry manually'));
 	        } catch (err) {
-	            Channel.fire('tips', 'show', _('Copy failed, please manually'));
+	            Channel.fire('tips', 'show', _('Copy failed, please retry manually'));
 	        }
 
 	        document.body.removeChild(el);
@@ -2814,7 +2820,7 @@
 	})(window);
 
 /***/ },
-/* 16 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Channel = __webpack_require__(7);
@@ -2825,7 +2831,8 @@
 	Channel.bind(['view', 'copyAllToClipboard'], ['clipboard', 'copy']);
 	Channel.bind(['view', 'reset'], ['uploader', 'reset']);
 	Channel.bind(['view', 'loadHistory'], ['historyManager', 'load']);
-	Channel.bind(['view', 'loadSettings'], ['settings', 'load']);
+	Channel.bind(['view', 'loadSettings'], ['config', 'get']);
+	Channel.bind(['view', 'updateSettings'], ['config', 'update']);
 
 	Channel.bind(['uploader', 'uploadStart'], ['view', 'closePlat']);
 	Channel.bind(['uploader', 'uploadStart'], ['view', 'uploadLock']);
@@ -2837,12 +2844,12 @@
 
 	// TODO support more apps
 	var APPS = {
-	    weibo: __webpack_require__(17)
+	    weibo: __webpack_require__(16)
 	};
-	Channel.bind(['uploader', 'uploadTo'], [APPS[config.get('defaultAPP')].name, 'upload']);
+	Channel.bind(['uploader', 'uploadTo'], [APPS[config.get('default_storage')].name, 'upload']);
 
 /***/ },
-/* 17 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global) {

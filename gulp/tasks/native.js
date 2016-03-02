@@ -68,9 +68,9 @@ module.exports = function (gulp, PLUGIN, CONF) {
             })
             .defer(function (next) {
                 gulp.src([
-                    CONF.src + '/js/main.js'
+                    CONF.src + '/main.js'
                 ])
-                    .pipe(gulp.dest(CONF.native + '/js'))
+                    .pipe(gulp.dest(CONF.native))
                     .on('end', function () {
                         next();
                     });

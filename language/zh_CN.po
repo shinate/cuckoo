@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: cuckoo\n"
-"POT-Creation-Date: 2016-03-02 14:02+0800\n"
-"PO-Revision-Date: 2016-03-02 14:22+0800\n"
+"POT-Creation-Date: 2016-03-02 16:22+0800\n"
+"PO-Revision-Date: 2016-03-02 16:33+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: zh_CN\n"
@@ -22,7 +22,7 @@ msgid "upload_timeout"
 msgstr "上传等待超时"
 
 #: config.js:7
-msgid "defaultAPP"
+msgid "default_storage"
 msgstr "默认图床"
 
 #: config.js:8
@@ -42,11 +42,11 @@ msgid "zh_TW"
 msgstr "中文 (繁体)"
 
 #: modules/clipboard.js:20
-msgid "Copy to clipboard success"
+msgid "Copy to clipboard successfully"
 msgstr "成功复制到剪切板"
 
 #: modules/clipboard.js:20 modules/clipboard.js:22
-msgid "Copy failed, please manually"
+msgid "Copy failed, please retry manually"
 msgstr "复制失败，请手动进行"
 
 #: modules/uploader.js:103
@@ -60,13 +60,13 @@ msgstr "开始上传 %d 张图片"
 
 #: modules/uploader.js:107
 #, javascript-format
-msgid "Start uploading %d pictures, Ignore %d invalid file"
+msgid "Start uploading %d pictures, with %d invalid file ignored"
 msgstr "开始上传 %d 张图片，忽略 %d 无效文件"
 
 #: modules/uploader.js:137
 #, javascript-format
-msgid "Upload successful(%d/%d)"
-msgstr "上传成功(%d/%d)"
+msgid "Upload successfully (%d/%d)"
+msgstr "上传成功 (%d/%d)"
 
 #: modules/uploader.js:202 modules/view.js:67
 msgid "Copy to clipboard"
@@ -101,25 +101,59 @@ msgid "Settings"
 msgstr "设置"
 
 #: modules/view.js:58 modules/view.js:60
-msgid "Drop pictures here OR click to open a file picker"
+msgid "Drop picture(s) here OR click to open a file picker"
 msgstr "将图片拖至此处，或单击以打开文件选择器"
 
 #: modules/view.js:68
-msgid "Conversion to Markdown"
+msgid "Convert to Markdown"
 msgstr "转换为Markdown格式"
 
 #: modules/view.js:69
-msgid "Conversion to HTML"
+msgid "Convert to HTML"
 msgstr "转换为HTML格式"
 
 #: modules/view.js:70
-msgid "Conversion to UBB"
+msgid "Convert to UBB"
 msgstr "转换为UBB格式"
 
 #: modules/view.js:71
 msgid "Restore"
 msgstr "还原"
 
-#: modules/view.js:371
-msgid "No history"
+#: modules/view.js:376
+msgid "No history found"
 msgstr "没有历史上传"
+
+#: modules/view.js:419
+msgid "SAVE"
+msgstr "保存"
+
+#~ msgid "defaultAPP"
+#~ msgstr "默认图床"
+
+#~ msgid "Copy to clipboard success"
+#~ msgstr "成功复制到剪切板"
+
+#~ msgid "Copy failed, please manually"
+#~ msgstr "复制失败，请手动进行"
+
+#~ msgid "Start uploading %d pictures, Ignore %d invalid file"
+#~ msgstr "开始上传 %d 张图片，忽略 %d 无效文件"
+
+#~ msgid "Upload successful(%d/%d)"
+#~ msgstr "上传成功(%d/%d)"
+
+#~ msgid "Drop pictures here OR click to open a file picker"
+#~ msgstr "将图片拖至此处，或单击以打开文件选择器"
+
+#~ msgid "Conversion to Markdown"
+#~ msgstr "转换为Markdown格式"
+
+#~ msgid "Conversion to HTML"
+#~ msgstr "转换为HTML格式"
+
+#~ msgid "Conversion to UBB"
+#~ msgstr "转换为UBB格式"
+
+#~ msgid "No history"
+#~ msgstr "没有历史上传"

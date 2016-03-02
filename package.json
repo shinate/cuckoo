@@ -1,6 +1,6 @@
 {
   "name": "cuckoo",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Get pictures of the network address",
   "devDependencies": {
     "electron-packager": "^5.2.1",
@@ -32,6 +32,8 @@
     "native": "electron ./src",
     "build": "gulp",
     "lang": "gulp i18n",
+    "clean": "gulp clean",
+    "dev": "gulp dev-js-bundle",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

@@ -6,7 +6,8 @@ Channel.bind(['view', 'selectedFiles'], ['uploader', 'upload']);
 Channel.bind(['view', 'copyAllToClipboard'], ['clipboard', 'copy']);
 Channel.bind(['view', 'reset'], ['uploader', 'reset']);
 Channel.bind(['view', 'loadHistory'], ['historyManager', 'load']);
-Channel.bind(['view', 'loadSettings'], ['settings', 'load']);
+Channel.bind(['view', 'loadSettings'], ['config', 'get']);
+Channel.bind(['view', 'updateSettings'], ['config', 'update']);
 
 Channel.bind(['uploader', 'uploadStart'], ['view', 'closePlat']);
 Channel.bind(['uploader', 'uploadStart'], ['view', 'uploadLock']);
@@ -20,4 +21,4 @@ Channel.bind(['uploader', 'saveToHistory'], ['historyManager', 'add']);
 var APPS = {
     weibo: require('./app/weibo')
 };
-Channel.bind(['uploader', 'uploadTo'], [APPS[config.get('defaultAPP')].name, 'upload']);
+Channel.bind(['uploader', 'uploadTo'], [APPS[config.get('default_storage')].name, 'upload']);

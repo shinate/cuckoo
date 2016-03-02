@@ -2,6 +2,7 @@
 
     var Channel = require('./Channel');
     var _ = require('./i18n');
+    var config = require('./config');
 
     var name = 'view';
     var it = {};
@@ -55,9 +56,9 @@
             '<div class="drop-pictures-here">',
             '<i class="fa fa-picture-o"></i>',
             '<i class="fa fa-folder-open-o"></i>',
-            '<b>' + _('Drop pictures here OR click to open a file picker') + '</b>',
+            '<b>' + _('Drop picture(s) here OR click to open a file picker') + '</b>',
             '</div>',
-            '<input node-type="uploadBox" type="file" multiple="true" title="' + _('Drop pictures here OR click to open a file picker') + '">',
+            '<input node-type="uploadBox" type="file" multiple="true" title="' + _('Drop picture(s) here OR click to open a file picker') + '">',
             '</div>',
             '</li>',
 
@@ -65,9 +66,9 @@
             '<div>',
             '<nav class="toolbar">',
             '<button action-type="copy" class="fl fa fa-copy" title="' + _('Copy to clipboard') + '"></button>',
-            '<button action-type="markdown" class="fl" title="' + _('Conversion to Markdown') + '">![Markdown</button>',
-            '<button action-type="image" class="fl" title="' + _('Conversion to HTML') + '">&lt;IMG</button>',
-            '<button action-type="ubb" class="fl" title="' + _('Conversion to UBB') + '">[UBB]</button>',
+            '<button action-type="markdown" class="fl" title="' + _('Convert to Markdown') + '">![Markdown</button>',
+            '<button action-type="image" class="fl" title="' + _('Convert to HTML') + '">&lt;IMG</button>',
+            '<button action-type="ubb" class="fl" title="' + _('Convert to UBB') + '">[UBB]</button>',
             '<button action-type="undo" class="fr fa fa-undo" title="' + _('Restore') + '"></button>',
             '</nav>',
             '<textarea action-type="selectAll" readonly node-type="urlsTextBox"></textarea>',
@@ -267,6 +268,11 @@
                 e.preventDefault();
                 $(this).get(0).select();
                 return false;
+            },
+            saveSettings: function (e) {
+                e.preventDefault();
+                it.saveSettings();
+                return false;
             }
         }
     };
@@ -368,53 +374,75 @@
                 }).join('\n'));
                 it.switchPlatform('history');
             } else {
-                Channel.fire('tips', 'show', _('No history'));
+                Channel.fire('tips', 'show', _('No history found'));
             }
         });
     };
 
     it.renderSettings = function () {
-        Channel.fire(name, 'loadSettings', function (settings) {
 
-            var TPL = [];
+        var settings = config.get();
 
-            var allowedLanguage = global.__ALLOWED_LANGUAGE__;
-            if (allowedLanguage.indexOf('en') < 0) {
-                allowedLanguage = ['en'].concat(allowedLanguage);
+        var TPL = [];
+
+        var allowedLanguage = global.__ALLOWED_LANGUAGE__;
+        if (allowedLanguage.indexOf('en') < 0) {
+            allowedLanguage = ['en'].concat(allowedLanguage);
+        }
+
+        Object.keys(settings).forEach(function (option) {
+
+            TPL.push('<li class="clearfix">');
+            TPL.push('<label>' + _(option) + ':</label>');
+            if (option === 'language') {
+                TPL.push('<select name="language">');
+                allowedLanguage.forEach(function (lang) {
+                    TPL.push('' +
+                        '<option value="' + lang + '"' + (settings.language === lang ? ' selected="selected"' : '') + '>' +
+                        _(lang) +
+                        '</option>'
+                    );
+                });
+                TPL.push('</select>');
+            } else {
+                TPL.push('<input name="' + option + '"');
+                switch (typeof settings.option) {
+                    case 'string':
+                        TPL.push(' type="text"');
+                        break;
+                    case 'number':
+                        TPL.push(' type="number"');
+                        break;
+                }
+                TPL.push(' value="' + settings[option] + '" />');
             }
 
-            Object.keys(settings).forEach(function (option) {
-
-                TPL.push('<li class="clearfix">');
-                TPL.push('<label>' +
-                    _(option) + ':' +
-                    '</label>');
-                if (option === 'language') {
-                    TPL.push('<select name="language">');
-                    allowedLanguage.forEach(function (lang) {
-                        TPL.push('' +
-                            '<option value="' + lang + '">' +
-                            _(lang) +
-                            '</option>'
-                        );
-                    });
-                    TPL.push('</select>');
-                } else {
-                    TPL.push('<input');
-                    switch (typeof settings.option) {
-                        case 'string':
-                            TPL.push(' type="text"');
-                            break;
-                    }
-                    TPL.push(' value="' + settings[option] + '" />');
-                }
-
-                TPL.push('</li>');
-            });
-
-            nodes.settingsBox.html(TPL.join(''));
-            it.switchPlatform('settings');
+            TPL.push('</li>');
         });
+
+        TPL.push('<li><label>&nbsp;</label><button node-type="saveSettings" action-type="saveSettings">' + _('SAVE') + '</button></li>');
+
+        nodes.settingsBox.html(TPL.join(''));
+        it.switchPlatform('settings');
+    };
+
+    it.saveSettings = function () {
+        var cfg = {};
+        var name, value, type, el;
+        nodes.settingsBox.find('[name]').each(function () {
+            el = $(this);
+            name = el.attr('name');
+            type = el.attr('type');
+            value = el.val();
+            if (type === 'number') {
+                value = value.indexOf('.') > -1 ? parseFloat(value) : parseInt(value);
+            }
+            cfg[name] = value;
+        });
+        config.update(cfg);
+        setTimeout(function () {
+            window.location.reload();
+        }, 0);
     };
 
     it.reset = function () {
