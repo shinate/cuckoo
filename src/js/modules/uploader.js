@@ -5,14 +5,20 @@
 
 (function ($, global) {
 
+    var Channel = require('./Channel');
+    var config = require('./config');
+    var sprintf = require('../core/sprintf').sprintf;
+    var queue = require('../core/queue');
+    var _ = require('./i18n');
+
     var name = 'uploader';
+
     var it = {};
     var nodes = {};
     var previewList = [];
     var taskManager = {};
-    var config = global.__CONFIG__;
-    var _ = global.i18n;
-    var sprintf = global.sprintf;
+
+    var uploadTimeout = config.get('upload_timeout')
 
     var ALLOWED_TYPE = ['image/png', 'image/jpeg', 'image/gif', 'image/bmp'];
 
@@ -27,13 +33,15 @@
     };
 
     it.bind = function () {
-        for (var type in it.custEvts) {
+        var type;
+
+        for (type in it.custEvts) {
             if (it.custEvts.hasOwnProperty(type)) {
                 Channel.register(name, type, it.custEvts[type]);
             }
         }
 
-        for (var type in it.evts) {
+        for (type in it.evts) {
             if (it.evts.hasOwnProperty(type)) {
                 nodes.list.on('click', '[action-type="' + type + '"]', it.evts[type]);
             }
@@ -48,8 +56,6 @@
         },
         retry: function (e) {
             e.preventDefault();
-            // Channel.fire('tips', 'show', 'Coming soon...');
-            // TODO
             it.retry($(this).parent());
             return false;
         }
@@ -109,7 +115,7 @@
     it.uploadQueueCompleteScan = function () {
         var s = taskManager.uploadStatus;
         var reject = s.filter(function (v) {
-            return v === 'rejected' ? true : false;
+            return v === 'rejected';
         });
         var newPics = [];
         var reslove = s.filter(function (v, i) {
@@ -182,9 +188,9 @@
             ]);
             taskManager.uploadStatus[i] = global.setTimeout(function () {
                 it.uploaderr(i);
-                config.upload_timeout *= 1.5;
+                uploadTimeout *= 1.5;
                 next();
-            }, config.upload_timeout);
+            }, uploadTimeout);
         });
     };
 
@@ -253,4 +259,4 @@
 
     it.init();
 
-})(Zepto, this || window);
+})(Zepto, window);

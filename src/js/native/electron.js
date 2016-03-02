@@ -6,4 +6,4 @@
         global.native = require('electron');
     }
 
-})(this || window);
+})(window);

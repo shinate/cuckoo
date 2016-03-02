@@ -1,10 +1,13 @@
 (function (global) {
 
+    var Channel = require('./Channel');
+    var _ = require('./i18n');
+    var config = require('./config');
+
     var name = 'settings';
 
-
-    function show() {
-
+    function load(cb) {
+        cb(config.get());
     }
 
     function get() {
@@ -15,6 +18,6 @@
 
     }
 
-    Channel.register(name, 'show', show);
+    Channel.register(name, 'load', load);
 
-})(this || window);
+})(window);

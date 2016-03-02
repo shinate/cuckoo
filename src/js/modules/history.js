@@ -1,5 +1,7 @@
 (function (global) {
 
+    var Channel = require('./Channel');
+
     var name = 'historyManager';
 
     function add(list) {
@@ -29,4 +31,4 @@
         cb(load());
     });
 
-})(this || window);
+})(window);

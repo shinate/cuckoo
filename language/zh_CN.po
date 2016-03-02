@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: cuckoo\n"
-"POT-Creation-Date: 2016-03-01 15:16+0800\n"
-"PO-Revision-Date: 2016-03-01 15:16+0800\n"
+"POT-Creation-Date: 2016-03-02 14:02+0800\n"
+"PO-Revision-Date: 2016-03-02 14:22+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: zh_CN\n"
@@ -10,107 +10,116 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.8.3\n"
-"X-Poedit-Basepath: ../js\n"
+"X-Poedit-Basepath: ../src/js\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: $L(\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: core\n"
 
-#: modules/clipboard.js:19
+#: config.js:6
+msgid "upload_timeout"
+msgstr "上传等待超时"
+
+#: config.js:7
+msgid "defaultAPP"
+msgstr "默认图床"
+
+#: config.js:8
+msgid "language"
+msgstr "语言"
+
+#: config.js:10
+msgid "en"
+msgstr "英文"
+
+#: config.js:11
+msgid "zh_CN"
+msgstr "中文 (简体)"
+
+#: config.js:12
+msgid "zh_TW"
+msgstr "中文 (繁体)"
+
+#: modules/clipboard.js:20
 msgid "Copy to clipboard success"
 msgstr "成功复制到剪切板"
 
-#: modules/clipboard.js:19 modules/clipboard.js:21
+#: modules/clipboard.js:20 modules/clipboard.js:22
 msgid "Copy failed, please manually"
 msgstr "复制失败，请手动进行"
 
-#: modules/uploader.js:97
+#: modules/uploader.js:103
 msgid "No picture detected"
 msgstr "没有检测到任何图片文件"
 
-#: modules/uploader.js:99
+#: modules/uploader.js:105
 #, javascript-format
 msgid "Start uploading %d pictures"
 msgstr "开始上传 %d 张图片"
 
-#: modules/uploader.js:101
+#: modules/uploader.js:107
 #, javascript-format
 msgid "Start uploading %d pictures, Ignore %d invalid file"
 msgstr "开始上传 %d 张图片，忽略 %d 无效文件"
 
-#: modules/uploader.js:131
+#: modules/uploader.js:137
 #, javascript-format
 msgid "Upload successful(%d/%d)"
 msgstr "上传成功(%d/%d)"
 
-#: modules/uploader.js:196 modules/view.js:47
+#: modules/uploader.js:202 modules/view.js:67
 msgid "Copy to clipboard"
 msgstr "复制到剪切板"
 
-#: modules/uploader.js:197
+#: modules/uploader.js:203
 msgid "Retry"
 msgstr "重试"
 
-#: modules/view.js:25
+#: modules/view.js:44
 msgid "Upload"
 msgstr "上传"
 
-#: modules/view.js:26
+#: modules/view.js:45
 msgid "Copy all links"
 msgstr "复制所有链接"
 
-#: modules/view.js:27
+#: modules/view.js:46
 msgid "Edit links"
 msgstr "编辑现有链接"
 
-#: modules/view.js:28
+#: modules/view.js:47
 msgid "History"
 msgstr "历史"
 
-#: modules/view.js:29
+#: modules/view.js:48
 msgid "Clear"
 msgstr "清空"
 
-#: modules/view.js:30
+#: modules/view.js:49
 msgid "Settings"
 msgstr "设置"
 
-#: modules/view.js:39 modules/view.js:41
+#: modules/view.js:58 modules/view.js:60
 msgid "Drop pictures here OR click to open a file picker"
 msgstr "将图片拖至此处，或单击以打开文件选择器"
 
-#: modules/view.js:48
+#: modules/view.js:68
 msgid "Conversion to Markdown"
 msgstr "转换为Markdown格式"
 
-#: modules/view.js:49
+#: modules/view.js:69
 msgid "Conversion to HTML"
 msgstr "转换为HTML格式"
 
-#: modules/view.js:50
+#: modules/view.js:70
 msgid "Conversion to UBB"
 msgstr "转换为UBB格式"
 
-#: modules/view.js:51
+#: modules/view.js:71
 msgid "Restore"
 msgstr "还原"
 
-#: modules/view.js:357
+#: modules/view.js:371
 msgid "No history"
 msgstr "没有历史上传"
-
-#~ msgid "FUCK"
-#~ msgstr "擦"
-
-#~ msgid "Parse to Markdown"
-#~ msgstr "转换为Markdown格式"
-
-#~ msgid "Parse to HTML"
-#~ msgstr "转换为HTML格式"
-
-#~ msgid "Parse to UBB"
-#~ msgstr "转换为UBB格式"
-
-#~ msgid "Reverice"
-#~ msgstr "恢复"

@@ -16,8 +16,8 @@ module.exports = function (gulp, PLUGIN, CONF) {
         manifest.background.scripts = ['js/background.js'];
         fs.writeFileSync(CONF.chromePlugin + '/manifest.json', new Buffer(JSON.stringify(manifest)));
 
-        if (fs.existsSync(CONF.chromePluginPath + '/key.pem')) {
-            exec('/Applications/Google\\\ Chrome.app/Contents/MacOS/Google\\\ Chrome --pack-extension=' + CONF.chromePlugin + ' --pack-extension-key=' + CONF.chromePluginPath + '/key.pem');
+        if (fs.existsSync(CONF.chromePluginPath + '/' + CONF.name + '.pem')) {
+            exec(CONF.chromeApp + ' --pack-extension=' + CONF.chromePlugin + ' --pack-extension-key=' + CONF.chromePluginPath + '/' + CONF.name + '.pem');
             // exec('rm -rf ' + CONF.chromePlugin);
         } else {
             console.log('Key file does not exist, can not release.');
@@ -66,7 +66,7 @@ module.exports = function (gulp, PLUGIN, CONF) {
     gulp.task('chrome-plugin-html', function (cb) {
         return gulp.src([CONF.src + '/*.html'])
             .pipe(htmlReplace({
-                js: ['js/config.js', 'js/core.js', 'js/lang.js', 'js/main.js'],
+                js: ['js/config.js', 'js/language.js', 'js/bundle.js'],
                 css: 'style/css/style.css'
             }))
             .pipe(gulp.dest(CONF.chromePlugin));

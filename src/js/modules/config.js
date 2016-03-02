@@ -1,7 +1,9 @@
 (function (global, $) {
 
+    var Channel = require('./Channel');
+
     var name = 'config';
-    var config;
+    var config = $.extend({}, global.__CONFIG__ || {}, JSON.parse(global.localStorage.getItem(name)));
 
     function set(key, value) {
         config[key] = value;
@@ -20,7 +22,12 @@
     Channel.register(name, 'get', get);
     Channel.register(name, 'clear', clear);
 
-    var config = $.extend({}, global.__CONFIG__, JSON.parse(global.localStorage.getItem(name)));
     global.__CONFIG__ = config;
 
-})(this || window, Zepto);
+    module.exports = {
+        get: get,
+        set: set,
+        clear: clear
+    }
+
+})(window, Zepto);

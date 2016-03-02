@@ -120,13 +120,13 @@
     Channel.bind = bind;
     Channel.unbind = unBind;
 
-    //if (typeof define === "function" && define.amd)
-    //    define(function () {
-    //        return Channel;
-    //    });
-    //else if (typeof module === "object" && module.exports)
-    //    module.exports = Channel;
-    //else
-    global.Channel = Channel;
+    if (typeof define === "function" && define.amd)
+        define(function () {
+            return Channel;
+        });
+    else if (typeof module === "object" && module.exports)
+        module.exports = Channel;
+    else
+        global.Channel = Channel;
 
-})(this || window);
+})(window);

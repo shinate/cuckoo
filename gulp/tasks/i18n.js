@@ -34,7 +34,7 @@ module.exports = function (gulp, PLUGIN, CONF) {
 
                     this.push(new File({
                         base: CONF.src + '/js',
-                        path: CONF.src + '/js/lang.js',
+                        path: CONF.src + '/js/language.js',
                         contents: new Buffer(content)
                     }));
                     cb();

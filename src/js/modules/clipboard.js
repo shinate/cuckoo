@@ -1,8 +1,9 @@
 (function (global) {
 
-    var name = 'clipboard';
+    var Channel = require('./Channel');
+    var _ = require('./i18n');
 
-    var _ = global.i18n;
+    var name = 'clipboard';
 
     function copyTextToClipboard(text) {
 
@@ -26,4 +27,4 @@
 
     Channel.register(name, 'copy', copyTextToClipboard);
 
-})(this || window);
+})(window);
