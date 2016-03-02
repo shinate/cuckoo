@@ -1,5 +1,6 @@
 /dist/chrome-plugin/cuckoo
 *.pem
+*.dmg
 /bower_components
 
 # Created by .ignore support plugin (hsz.mobi)

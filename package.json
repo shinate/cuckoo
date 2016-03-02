@@ -30,7 +30,7 @@
   },
   "scripts": {
     "native": "electron ./src",
-    "build": "gulp",
+    "build": "gulp clean && gulp",
     "lang": "gulp i18n",
     "clean": "gulp clean",
     "dev": "gulp dev-js-bundle",
